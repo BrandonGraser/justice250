@@ -218,15 +218,15 @@ h2.sec-title{
 .shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:820px){.shift-grid{grid-template-columns:1fr}}
 .shift{
-  border:2px solid var(--ink);border-radius:999px;padding:13px 22px;
+  border:2px solid var(--ink);border-radius:18px;padding:14px 18px 15px;
   box-shadow:0 3px 0 var(--ink);background:var(--card);
   transition:transform .15s ease;
-  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;
 }
 .shift:hover{transform:translateY(-3px)}
-.shift .from{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:line-through;white-space:nowrap}
-.shift .arrow{font-family:var(--display);font-size:17px;color:var(--orange)}
-.shift .to{font-family:var(--display);font-size:17px;line-height:1;white-space:nowrap}
+.shift .from{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-decoration:line-through;white-space:nowrap}
+.shift .arrow{display:inline;font-family:var(--display);font-size:17px;color:var(--orange);margin-right:6px}
+.shift .to{font-family:var(--display);font-size:18px;line-height:1;white-space:nowrap}
 .shift p{margin-top:12px;font-size:13.5px;color:var(--ink-soft)}
 .shift.c1{background:var(--sky-4);color:#434343}.shift.c1 p{color:#434343}
 .shift.c2{background:var(--orange-5)}
@@ -516,18 +516,15 @@ footer li a:hover{color:var(--mustard-2)}
       <div class="shift-grid">
         <div class="shift c1 reveal">
           <span class="from">From diagnosis</span>
-          <span class="arrow">→</span>
-          <span class="to">TO DESIGN</span>
+          <span class="to"><span class="arrow">→</span>TO DESIGN</span>
         </div>
         <div class="shift c2 reveal">
           <span class="from">From outrage</span>
-          <span class="arrow">→</span>
-          <span class="to">TO SOLUTIONS</span>
+          <span class="to"><span class="arrow">→</span>TO SOLUTIONS</span>
         </div>
         <div class="shift c3 reveal">
           <span class="from">From the past</span>
-          <span class="arrow">→</span>
-          <span class="to">TO THE FUTURE</span>
+          <span class="to"><span class="arrow">→</span>TO THE FUTURE</span>
         </div>
       </div>
     </div>
