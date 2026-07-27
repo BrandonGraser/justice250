@@ -30,5 +30,5 @@ All pre-existing site copy is preserved verbatim. Sample posts, events, and vide
 ## Notes
 
 - Colors are exact brand hex values (Sky Blue / Joy Orange / Mustard ramps + charcoal `#434343`).
-- Body/label type is the real IBM Plex Mono (embedded). Headings use Archivo Black as a stand-in for the licensed Dingos Stamp — swap in the real font in Wix.
+- Body/label type is the real IBM Plex Mono (embedded). Headings use the real Dingos Stamp (embedded). Body/label type is the real IBM Plex Mono.
 - A campaign of [The Just Trust](https://thejusttrust.org/).
