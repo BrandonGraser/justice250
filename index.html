@@ -148,6 +148,8 @@ button.btn{cursor:pointer}
   position:relative;overflow:hidden;color:#434343;
   --ink:#434343;--ink-soft:rgba(67,67,67,.78);--card:#FFFFFF;
   --line:rgba(67,67,67,.16);--shadow:0 2px 0 rgba(67,67,67,.9);
+  background-image:radial-gradient(rgba(67,67,67,.09) 1px,transparent 1.35px);
+  background-size:8px 8px;
 }
 .sec.tint-blue{background-color:#85D0F8}
 .sec.tint-orange{background-color:#FDA24F}
@@ -388,6 +390,8 @@ h2.sec-title{
 /* ---------- newsletter ---------- */
 .newsletter{
   background:linear-gradient(160deg,var(--sky-2),var(--sky-3));
+  background-image:radial-gradient(rgba(67,67,67,.09) 1px,transparent 1.35px),linear-gradient(160deg,var(--sky-2),var(--sky-3));
+  background-size:8px 8px,cover;
   border:2px solid var(--ink);border-radius:26px;box-shadow:0 5px 0 var(--ink);
   padding:44px 34px;text-align:center;position:relative;overflow:hidden;
 }
