@@ -202,9 +202,13 @@ h2.sec-title{
 /* ---------- why now ---------- */
 .why-copy{max-width:680px;margin-bottom:44px}
 .why-copy p{margin:12px 0}
-.know-stack{display:flex;flex-direction:column;gap:12px;margin:24px 0}
+.why-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:44px;align-items:center;margin-bottom:34px}
+.why-grid .why-copy{margin-bottom:0}
+.why-grid .why-copy p:first-child{margin-top:0}
+@media (max-width:820px){.why-grid{grid-template-columns:1fr;gap:24px}}
+.know-stack{display:flex;flex-direction:column;gap:14px;margin:0}
 .know{
-  font-family:var(--display);font-size:clamp(16px,2.3vw,22px);line-height:1.22;
+  font-family:var(--display);font-size:clamp(15px,1.8vw,19px);line-height:1.25;
   border-left:6px solid var(--sky);padding-left:16px;margin:0;
 }
 .know-stack .know:nth-child(2){border-left-color:var(--orange)}
@@ -214,14 +218,15 @@ h2.sec-title{
 .shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 @media (max-width:820px){.shift-grid{grid-template-columns:1fr}}
 .shift{
-  border:2px solid var(--ink);border-radius:20px;padding:26px 22px;
-  box-shadow:0 4px 0 var(--ink);background:var(--card);
+  border:2px solid var(--ink);border-radius:999px;padding:13px 22px;
+  box-shadow:0 3px 0 var(--ink);background:var(--card);
   transition:transform .15s ease;
+  display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;
 }
-.shift:hover{transform:translateY(-4px)}
-.shift .from{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-decoration:line-through}
-.shift .arrow{font-family:var(--display);font-size:22px;margin:6px 0;color:var(--orange)}
-.shift .to{font-family:var(--display);font-size:24px;line-height:1.05}
+.shift:hover{transform:translateY(-3px)}
+.shift .from{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);text-decoration:line-through;white-space:nowrap}
+.shift .arrow{font-family:var(--display);font-size:17px;color:var(--orange)}
+.shift .to{font-family:var(--display);font-size:17px;line-height:1;white-space:nowrap}
 .shift p{margin-top:12px;font-size:13.5px;color:var(--ink-soft)}
 .shift.c1{background:var(--sky-4);color:#434343}.shift.c1 p{color:#434343}
 .shift.c2{background:var(--orange-5)}
@@ -496,31 +501,33 @@ footer li a:hover{color:var(--mustard-2)}
         <span class="eyebrow orange">WHY NOW</span>
         <h2 class="sec-title">WHY THIS CAMPAIGN? WHY NOW?</h2>
       </div>
-      <div class="why-copy reveal">
-        <p>For decades, the criminal justice reform field has done the essential work of documenting harm, exposing failure, and naming injustice. That work changed public awareness, shifted policy debates, and built a shared understanding that the system must do a far better job of delivering on both safety and justice.</p>
-        <p>Because of that work, we are no longer in a moment of discovery.</p>
+      <div class="why-grid reveal">
+        <div class="why-copy">
+          <p>For decades, the criminal justice reform field has done the essential work of documenting harm, exposing failure, and naming injustice. That work changed public awareness, shifted policy debates, and built a shared understanding that the system must do a far better job of delivering on both safety and justice.</p>
+          <p>Because of that work, we are no longer in a moment of discovery.</p>
+          <p>As America approaches its 250th anniversary, the question before us is no longer whether the system needs to change. The question is what we are building next. Justice &amp; The Next 250 is an invitation to shift our collective focus to what CAN BE, and to lead the way there.</p>
+        </div>
         <div class="know-stack">
           <p class="know">We know what is broken.</p>
           <p class="know">We know the impact of that brokenness.</p>
           <p class="know">And we know that the status quo does not deliver safety, accountability, or dignity. The things literally everyone wants.</p>
         </div>
-        <p>As America approaches its 250th anniversary, the question before us is no longer whether the system needs to change. The question is what we are building next. Justice &amp; The Next 250 is an invitation to shift our collective focus to what CAN BE, and to lead the way there.</p>
       </div>
       <div class="shift-grid">
         <div class="shift c1 reveal">
-          <div class="from">From diagnosis</div>
-          <div class="arrow">↓</div>
-          <div class="to">TO DESIGN</div>
+          <span class="from">From diagnosis</span>
+          <span class="arrow">→</span>
+          <span class="to">TO DESIGN</span>
         </div>
         <div class="shift c2 reveal">
-          <div class="from">From outrage</div>
-          <div class="arrow">↓</div>
-          <div class="to">TO SOLUTIONS</div>
+          <span class="from">From outrage</span>
+          <span class="arrow">→</span>
+          <span class="to">TO SOLUTIONS</span>
         </div>
         <div class="shift c3 reveal">
-          <div class="from">From the past</div>
-          <div class="arrow">↓</div>
-          <div class="to">TO THE FUTURE</div>
+          <span class="from">From the past</span>
+          <span class="arrow">→</span>
+          <span class="to">TO THE FUTURE</span>
         </div>
       </div>
     </div>
