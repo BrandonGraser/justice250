@@ -42,12 +42,11 @@ Visit **`/admin`** on the deployed site, log in with the editor password, make c
 ### Vercel setup (one time, done by whoever deploys)
 
 1. Import this repo into Vercel (no build settings needed — it's a static site with `/api` functions).
-2. In Vercel → Project → Settings → Environment Variables, add:
-   - `ADMIN_PASSWORD` — the password the campaign team will use to log in at `/admin`
-   - `GITHUB_TOKEN` — a fine-grained GitHub token for this repo with **Contents: Read and write** (create at github.com → Settings → Developer settings → Fine-grained tokens)
-3. Redeploy. Done — editors only ever need the URL and the password.
+2. Vercel dashboard → **Storage → Create Database → Blob** → connect it to this project (Vercel adds the storage credentials automatically).
+3. Project → Settings → Environment Variables: add **`ADMIN_PASSWORD`** — the password the campaign team will use to log in at `/admin`.
+4. Redeploy. Done — editors only ever need the URL and the password. Nothing expires, nothing to rotate.
 
-Under the hood: all editable content lives in [`content.json`](content.json). The editor talks to serverless functions in [`api/`](api/) which verify the password and commit changes to this repo (the GitHub token never leaves the server). Each publish triggers a Vercel redeploy, so the site always serves the latest content. Uploaded images land in `assets/cms/`.
+Under the hood: published content and uploaded images live in Vercel Blob storage; the serverless functions in [`api/`](api/) verify the password and read/write it. Publishes are live immediately — no redeploy involved. The [`content.json`](content.json) in this repo is only the seed/default used before the first publish.
 
 ## Notes
 

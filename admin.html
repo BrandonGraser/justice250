@@ -210,15 +210,19 @@ function logout(){password='';sessionStorage.removeItem('jn250_pw');$('#app').st
 
 function loadContent(){
   $('#status').textContent='Loading…';
-  return fetch('content.json?v='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw new Error('Could not load site content');return r.json()})
+  return fetch('/api/content?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw 0;return r.json()})
+    .catch(function(){
+      return fetch('content.json?v='+Date.now(),{cache:'no-store'})
+        .then(function(r){if(!r.ok)throw new Error('Could not load site content');return r.json()});
+    })
     .then(function(c){content=c;$('#status').textContent='';renderAll()});
 }
 function publish(){
   var btn=$('#btn-publish'); btn.disabled=true; $('#status').textContent='Publishing…';
   api('save',{content:content}).then(function(){
     setDirty(false); btn.disabled=false; $('#status').textContent='';
-    toast('Published! The live site updates in about a minute.');
+    toast('Published! Your changes are live now — refresh the site to see them.');
   }).catch(function(e){btn.disabled=false;$('#status').textContent='';toast('Publish failed: '+e.message,true)});
 }
 function uploadImage(file,cb){

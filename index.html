@@ -1085,8 +1085,12 @@ footer li a:hover{color:var(--mustard-2)}
     document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')});
   }
   window.__applyCMS = apply;
-  fetch('content.json?v='+new Date().getTime(),{cache:'no-store'})
-    .then(function(r){return r.ok?r.json():null})
+  fetch('/api/content?v='+new Date().getTime(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw 0;return r.json()})
+    .catch(function(){
+      return fetch('content.json?v='+new Date().getTime(),{cache:'no-store'})
+        .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
+    })
     .then(function(c){if(c)apply(c)})
     .catch(function(){});
 })();
