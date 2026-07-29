@@ -37,9 +37,17 @@ The site has a built-in editor at **`/admin.html`** — no coding needed:
 - **Events** — add/edit the rows in "Show up for the next 250," reorder them, mark past events
 - **Videos** — paste a YouTube link + title; the site shows the video thumbnail with a play button (first video is featured large)
 
-Hit **PUBLISH CHANGES** and the live site updates in about a minute. One-time setup: the editor asks for a GitHub access key (fine-grained token for this repo with *Contents: Read and write*), which stays in the editor's browser.
+Visit **`/admin`** on the deployed site, log in with the editor password, make changes, and hit **PUBLISH CHANGES** — the live site updates in about a minute.
 
-Under the hood: all editable content lives in [`content.json`](content.json); the editor commits to this repo via the GitHub API, and the site reads the file at load time. Uploaded images land in `assets/cms/`.
+### Vercel setup (one time, done by whoever deploys)
+
+1. Import this repo into Vercel (no build settings needed — it's a static site with `/api` functions).
+2. In Vercel → Project → Settings → Environment Variables, add:
+   - `ADMIN_PASSWORD` — the password the campaign team will use to log in at `/admin`
+   - `GITHUB_TOKEN` — a fine-grained GitHub token for this repo with **Contents: Read and write** (create at github.com → Settings → Developer settings → Fine-grained tokens)
+3. Redeploy. Done — editors only ever need the URL and the password.
+
+Under the hood: all editable content lives in [`content.json`](content.json). The editor talks to serverless functions in [`api/`](api/) which verify the password and commit changes to this repo (the GitHub token never leaves the server). Each publish triggers a Vercel redeploy, so the site always serves the latest content. Uploaded images land in `assets/cms/`.
 
 ## Notes
 
