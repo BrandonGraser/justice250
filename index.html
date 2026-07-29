@@ -900,11 +900,16 @@ footer li a:hover{color:var(--mustard-2)}
 </footer>
 
 <script>
-// Pause hero video for users who prefer reduced motion
+// Pause hero video for users who prefer reduced motion; otherwise nudge autoplay
 (function(){
+  var v=document.querySelector('.hero-video');
+  if(!v)return;
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    var v=document.querySelector('.hero-video');
-    if(v){v.removeAttribute('autoplay');v.pause();}
+    v.removeAttribute('autoplay');v.pause();
+  }else{
+    var tryPlay=function(){v.play().catch(function(){})};
+    tryPlay();
+    document.addEventListener('click',tryPlay,{once:true});
   }
 })();
 
