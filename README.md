@@ -27,6 +27,20 @@ Mirrors the original site's flow, with the new sections slotted in:
 
 All pre-existing site copy is preserved verbatim. Sample posts, events, and videos are placeholders.
 
+## Editing the site (for the campaign team)
+
+The site has a built-in editor at **`/admin.html`** — no coding needed:
+
+- **Site text** — change any wording on the page
+- **Images** — swap the About photo (and add images to blog posts)
+- **Blog posts** — fill out a simple form (title, category, preview, full text, image) and the post appears on the site; clicking a card opens the full post
+- **Events** — add/edit the rows in "Show up for the next 250," reorder them, mark past events
+- **Videos** — paste a YouTube link + title; the site shows the video thumbnail with a play button (first video is featured large)
+
+Hit **PUBLISH CHANGES** and the live site updates in about a minute. One-time setup: the editor asks for a GitHub access key (fine-grained token for this repo with *Contents: Read and write*), which stays in the editor's browser.
+
+Under the hood: all editable content lives in [`content.json`](content.json); the editor commits to this repo via the GitHub API, and the site reads the file at load time. Uploaded images land in `assets/cms/`.
+
 ## Notes
 
 - Colors are exact brand hex values (Sky Blue / Joy Orange / Mustard ramps + charcoal `#434343`).

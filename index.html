@@ -505,6 +505,15 @@ footer li a:hover{color:var(--mustard-2)}
   footer{padding:44px 0 32px}
 }
 
+
+/* post modal */
+#post-modal{position:fixed;inset:0;z-index:200;background:rgba(30,30,30,.6);display:flex;align-items:center;justify-content:center;padding:20px}
+.pm-box{background:var(--card);color:var(--ink);border:2px solid var(--ink);border-radius:22px;box-shadow:0 5px 0 var(--ink);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:30px 28px;position:relative;text-align:left}
+.pm-close{position:absolute;right:14px;top:12px;background:var(--paper);border:2px solid var(--ink);border-radius:50%;width:34px;height:34px;cursor:pointer;font-family:var(--mono);font-weight:700;color:var(--ink)}
+.pm-title{font-family:var(--display);font-size:26px;line-height:1.1;margin:10px 0 6px}
+.pm-img{width:100%;border-radius:14px;border:2px solid var(--ink);margin:14px 0}
+.pm-body p{margin:10px 0;font-size:14px}
+
 /* reveal */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in{opacity:1;transform:none}
@@ -935,4 +944,146 @@ footer li a:hover{color:var(--mustard-2)}
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(function(e){io.observe(e)});
 })();
+
+// ---------- CMS loader: applies content.json when hosted alongside it ----------
+(function(){
+  var TEXT_MAP = {
+    hero_kicker: '.hero-kicker',
+    hero_tagline: '.hero-tag',
+    about_title: '.as-panel .sec-title',
+    about_body: '.as-panel p',
+    why_title: '#why .sec-title',
+    why_p1: '#why .why-copy p:nth-of-type(1)',
+    why_p2: '#why .why-copy p:nth-of-type(2)',
+    why_p3: '#why .why-copy p:nth-of-type(3)',
+    why_know1: '#why .know-stack .know:nth-child(1)',
+    why_know2: '#why .know-stack .know:nth-child(2)',
+    why_know3: '#why .know-stack .know:nth-child(3)',
+    blog_title: '#updates .sec-title',
+    blog_lede: '#updates .sec-lede',
+    involved_title: '#involved .sec-title',
+    involved_p1: '#involved .why-copy p:nth-of-type(1)',
+    involved_p2: '#involved .why-copy p:nth-of-type(2)',
+    host_title: '#host .sec-title',
+    host_intro: '#host .why-copy p:nth-of-type(1)',
+    host_card1_title: '#host .gi.g1 h3',
+    host_card1_body: '#host .gi.g1 p',
+    host_card2_title: '#host .gi.g2 h3',
+    host_card2_body: '#host .gi.g2 p',
+    host_card3_title: '#host .gi.g3 h3',
+    host_card3_body: '#host .gi.g3 p',
+    events_title: '#events .sec-title',
+    events_lede: '#events .sec-lede',
+    feature_date: '#events .feature-event .date',
+    feature_title: '#events .fe-body h3',
+    feature_body: '#events .fe-body p',
+    feature_btn: '#events .fe-body .btn',
+    media_title: '#media .sec-title',
+    media_lede: '#media .sec-lede',
+    newsletter_title: '.newsletter h2',
+    newsletter_body: '.newsletter p',
+    footer_tagline: '.foot-tag',
+    contact_email: 'footer a[href^="mailto:"]'
+  };
+  var CAT = {news:['news','News'], persp:['persp','Perspective'], recap:['recap','Event recap']};
+  var CAM = '<span class="ph"><svg class="ph-cam" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8h4.2l1.6-2.4h5.4L16.3 8h4.2v11h-17z"/><circle cx="12" cy="13.4" r="3.1"/></svg>IMAGE PLACEHOLDER</span>';
+  function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
+  function ytId(url){
+    var m=String(url||'').match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+    return m?m[1]:null;
+  }
+
+  function renderBlog(posts){
+    var grid=document.querySelector('#updates .cards'); if(!grid||!posts) return;
+    grid.innerHTML = posts.map(function(p,i){
+      var cat = CAT[p.category]||CAT.news;
+      var tints=['sky','orange','mustard'];
+      var thumb = p.image
+        ? '<img class="thumb-img" src="'+esc(p.image)+'" alt="">'
+        : CAM;
+      return '<a class="card" href="'+(p.link?esc(p.link):'#')+'" data-cat="'+cat[0]+'" data-idx="'+i+'">'
+        +'<div class="thumb '+tints[i%3]+'">'+thumb+'</div>'
+        +'<div class="body">'
+        +'<div class="tagrow"><span class="tag '+cat[0]+'">'+cat[1]+'</span><span class="date">'+esc(p.date)+'</span></div>'
+        +'<div class="byline">'+esc(p.author||'By the campaign team')+(p.readTime?' · '+esc(p.readTime):'')+'</div>'
+        +'<h3>'+esc(p.title)+'</h3><p>'+esc(p.excerpt||'')+'</p>'
+        +'<span class="more">READ THE FULL POST →</span></div></a>';
+    }).join('');
+    grid.querySelectorAll('.card').forEach(function(card){
+      card.addEventListener('click',function(e){
+        var p=posts[+card.dataset.idx];
+        if(p&&p.body&&(!p.link||p.link==='#')){e.preventDefault();openPost(p);}
+      });
+    });
+    bindFilters();
+  }
+  function openPost(p){
+    var old=document.getElementById('post-modal'); if(old) old.remove();
+    var cat=CAT[p.category]||CAT.news;
+    var m=document.createElement('div'); m.id='post-modal';
+    m.innerHTML='<div class="pm-box"><button class="pm-close" aria-label="Close">✕</button>'
+      +'<div class="tagrow"><span class="tag '+cat[0]+'">'+cat[1]+'</span><span class="date">'+esc(p.date)+'</span></div>'
+      +'<h3 class="pm-title">'+esc(p.title)+'</h3>'
+      +'<div class="byline">'+esc(p.author||'By the campaign team')+(p.readTime?' · '+esc(p.readTime):'')+'</div>'
+      +(p.image?'<img class="pm-img" src="'+esc(p.image)+'" alt="">':'')
+      +'<div class="pm-body">'+String(p.body).split(/\n\n+/).map(function(x){return '<p>'+esc(x)+'</p>'}).join('')+'</div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){if(e.target===m||e.target.classList.contains('pm-close'))m.remove()});
+  }
+  function bindFilters(){
+    var chips=document.querySelectorAll('.chip'),cards=document.querySelectorAll('.card[data-cat]');
+    chips.forEach(function(c){
+      c.onclick=function(){
+        chips.forEach(function(x){x.setAttribute('aria-pressed','false')});
+        c.setAttribute('aria-pressed','true');
+        var f=c.dataset.f;
+        cards.forEach(function(card){card.style.display=(f==='all'||card.dataset.cat===f)?'':'none'});
+      };
+    });
+  }
+  function renderEvents(events){
+    var list=document.querySelector('#events .evt-list'); if(!list||!events) return;
+    list.innerHTML = events.map(function(ev){
+      return '<div class="evt'+(ev.past?' past':'')+'">'
+        +'<div class="when"><div class="m">'+esc(ev.month)+'</div><div class="d">'+esc(ev.day)+'</div></div>'
+        +'<div><h4>'+esc(ev.title)+'</h4><div class="meta">'+esc(ev.meta||'')+'</div></div>'
+        +'<a class="btn-mini" href="'+(ev.link?esc(ev.link):'#')+'"'+(ev.link&&/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(ev.label||'RSVP')+'</a></div>';
+    }).join('');
+  }
+  function renderVideos(videos){
+    var grid=document.querySelector('#media .media-grid'); if(!grid||!videos||!videos.length) return;
+    var clouds=[].map.call(grid.querySelectorAll('.cloud-img'),function(im){return im.getAttribute('src')});
+    function tile(v,big,i){
+      var id=ytId(v.url);
+      var href=id?('https://www.youtube.com/watch?v='+id):(v.url||'#');
+      var thumb=id?'<img class="thumb-img" src="https://i.ytimg.com/vi/'+id+'/hqdefault.jpg" alt="" onerror="this.remove()">':'';
+      if(!thumb&&clouds.length){thumb='<img class="cloud-img" src="'+clouds[i%clouds.length]+'" alt="">';}
+      return '<a class="vid '+(big?'big':'small '+(i%2?'s2':'s1'))+'" href="'+esc(href)+'" target="_blank" rel="noopener">'
+        +'<div class="screen">'+thumb+'<span class="play"></span>'+(v.duration?'<span class="dur">'+esc(v.duration)+'</span>':'')+'</div>'
+        +'<div class="vbody"><h3>'+esc(v.title)+'</h3><div class="vmeta">'+esc(v.meta||'')+'</div></div></a>';
+    }
+    var html=tile(videos[0],true,0);
+    if(videos.length>1){
+      html+='<div class="side-vids">'+videos.slice(1).map(function(v,i){return tile(v,false,i+1)}).join('')+'</div>';
+    }
+    grid.innerHTML=html;
+  }
+  function apply(c){
+    if(c.text) Object.keys(TEXT_MAP).forEach(function(k){
+      if(c.text[k]==null) return;
+      var el=document.querySelector(TEXT_MAP[k]); if(el) el.textContent=c.text[k];
+    });
+    if(c.images&&c.images.about_photo){
+      var img=document.querySelector('.as-photo img'); if(img) img.src=c.images.about_photo;
+    }
+    renderBlog(c.blog); renderEvents(c.events); renderVideos(c.videos);
+    document.querySelectorAll('.reveal').forEach(function(e){e.classList.add('in')});
+  }
+  window.__applyCMS = apply;
+  fetch('content.json?v='+new Date().getTime(),{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():null})
+    .then(function(c){if(c)apply(c)})
+    .catch(function(){});
+})();
+
 </script>
