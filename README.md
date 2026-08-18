@@ -22,7 +22,7 @@ Mirrors the original site's flow, with the new sections slotted in:
 5. Get Involved — *orange section*
 6. Host an Event — *yellow section, animated clouds*
 7. **Events** (new — Wix Events in the live build)
-8. **Media** (new — YouTube embeds in the live build)
+8. **Justice & The Next 250 Out in the World** (cross-platform campaign content)
 9. Newsletter signup
 
 All pre-existing site copy is preserved verbatim. Sample posts, events, and videos are placeholders.
@@ -35,7 +35,7 @@ The site has a built-in editor at **`/admin.html`** — no coding needed:
 - **Images** — swap the About photo (and add images to blog posts)
 - **Blog posts** — fill out a simple form (title, category, preview, full text, image) and the post appears on the site; clicking a card opens the full post
 - **Events** — add/edit the rows in "Show up for the next 250," reorder them, mark past events
-- **Videos** — paste a YouTube link + title; the site shows the video thumbnail with a play button (first video is featured large)
+- **Campaign content** — paste an Instagram, YouTube, or other social link plus a title (the first item is featured large)
 
 Visit **`/admin`** on the deployed site, log in with the editor password, make changes, and hit **PUBLISH CHANGES** — the live site updates in about a minute.
 

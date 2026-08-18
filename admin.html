@@ -160,7 +160,7 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
 
     <section class="panel" id="panel-videos">
       <h2>Videos</h2>
-      <p class="hint">Paste a YouTube link and the site shows its thumbnail with a play button. The first video in the list is featured large.</p>
+      <p class="hint">Paste a link to campaign content on Instagram, YouTube, or another social platform. The first item in the list is featured large.</p>
       <button class="btn primary" id="video-new" type="button">＋ NEW VIDEO</button>
       <div id="video-editor"></div>
       <div id="video-list" style="margin-top:18px"></div>
@@ -400,7 +400,7 @@ var videoEd=listEditor({
   blank:function(){return{url:'',title:'',meta:'',duration:''}},
   rowHtml:function(v){var id=ytId(v.url);return (id?'<img src="https://i.ytimg.com/vi/'+id+'/default.jpg" style="width:60px;height:44px;object-fit:cover;border-radius:8px;border:1.5px solid var(--ink)" alt="">':'<span class="pill">VIDEO</span>')+'<div class="t"><b>'+esc(v.title||'(untitled)')+'</b><span>'+esc(v.duration||'')+'</span></div>'},
   formHtml:function(v){return ''+
-    '<div class="field"><label>YouTube link</label><input type="url" id="f-url" value="'+esc(v.url)+'" placeholder="https://www.youtube.com/watch?v=…"></div>'+
+    '<div class="field"><label>Social or video link</label><input type="url" id="f-url" value="'+esc(v.url)+'" placeholder="https://www.instagram.com/…"></div>'+
     '<div class="field"><label>Title shown on the site</label><input type="text" id="f-title" value="'+esc(v.title)+'"></div>'+
     '<div class="row2">'+
     '<div class="field"><label>Detail line</label><input type="text" id="f-meta" value="'+esc(v.meta||'')+'"></div>'+
@@ -410,7 +410,7 @@ var videoEd=listEditor({
     var u=box.querySelector('#f-url').value.trim();
     var t=box.querySelector('#f-title').value.trim();
     if(!t)return 'Give the video a title first.';
-    if(u&&!ytId(u)&&!/^https?:/.test(u))return 'That YouTube link doesn\'t look right.';
+    if(u&&!/^https?:/.test(u))return 'That content link doesn\'t look right.';
     return{url:u,title:t,meta:box.querySelector('#f-meta').value.trim(),duration:box.querySelector('#f-dur').value.trim()};
   }
 });
