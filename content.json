@@ -120,9 +120,9 @@
   },
   {
     "month": "APR",
-    "day": "2026",
+    "day": "16/17",
     "title": "JUSTLEADERSHIPUSA",
-    "meta": "April 2026 · DC",
+    "meta": "April 16 networking mixer · April 17 recognition dinner · DC / VA",
     "link": "",
     "label": "PAST EVENT",
     "past": true
@@ -164,8 +164,8 @@
     "past": true
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "JUL",
+    "day": "1/8",
     "title": "ACLU WV",
     "meta": "July 1 - Martinsburg July 8 - South Charleston · WV",
     "link": "",
@@ -182,8 +182,8 @@
     "past": true
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "JUL",
+    "day": "17–19",
     "title": "FORMERLY INCARCERATED CONVICTED PEOPLE & FAMILIES MOVEMENT",
     "meta": "July 17-19 - Nashville August 21-23 - Chicago · IL, TN, DC, NV",
     "link": "",
@@ -200,8 +200,8 @@
     "past": true
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "AUG",
+    "day": "20/22",
     "title": "CLERGY FOR PRISON REFORM",
     "meta": "August 20, 2026 - 6 PM (Virtual Screening) August 22, 2026 - Columbia, MS (In Person0 · MS",
     "link": "",
@@ -209,8 +209,8 @@
     "past": true
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP",
+    "day": "23",
     "title": "LOUISVILLE PUBLIC MEDIA",
     "meta": "June 24 - Waterfront Wednesday August 18 - at Louisville Leadership Forum August 29 - LPM's \"Race Unwrapped: Art As Activism\" September 23 - Waterfront Wednesday · KY",
     "link": "",
@@ -218,8 +218,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP",
+    "day": "17",
     "title": "OKLAHOMANS FOR CRIMINAL JUSTICE REFORM",
     "meta": "August 31 September 17 · OK",
     "link": "",
@@ -239,7 +239,7 @@
     "month": "DATE",
     "day": "TBD",
     "title": "ACLU OF KENTUCKY",
-    "meta": "Date TBD · KY",
+    "meta": "October and early November dates TBD · KY",
     "link": "",
     "label": "COMING SOON",
     "past": false
@@ -254,17 +254,17 @@
     "past": false
   },
   {
-    "month": "DATE",
-    "day": "TBD",
+    "month": "OCT",
+    "day": "8",
     "title": "LOUISIANA CENTER FOR CHILDREN'S RIGHTS",
-    "meta": "Date TBD · LA",
+    "meta": "August 18–21 youth justice forum · October 8 community film screening · Other dates TBD · LA",
     "link": "",
     "label": "COMING SOON",
     "past": false
   },
   {
-    "month": "FAL",
-    "day": "2026",
+    "month": "FALL",
+    "day": "TBD",
     "title": "NATIVE WINGS LIKE AN EAGLE INC",
     "meta": "Fall 2026 · OK",
     "link": "",
@@ -272,8 +272,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP",
+    "day": "18",
     "title": "ADVANCE MARYLAND, MARYLAND YOUTH JUSTICE COALITION",
     "meta": "September 18, 2026 October 12th, 2026 · MD",
     "link": "",
@@ -335,8 +335,8 @@
     "past": true
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP/OCT",
+    "day": "TBD",
     "title": "MEA // HOWARD UNIVERSITY AI INITIATIVE",
     "meta": "September/October · MA, NY",
     "link": "",
@@ -353,8 +353,8 @@
     "past": false
   },
   {
-    "month": "DATE",
-    "day": "TBD",
+    "month": "OCT",
+    "day": "7/8",
     "title": "ALABAMA APPLESEED CENTER FOR LAW & JUSTICE",
     "meta": "Oct. 7 and 8 · AL",
     "link": "",
@@ -372,7 +372,7 @@
   },
   {
     "month": "OCT",
-    "day": "2026",
+    "day": "TBD",
     "title": "NC JUSTICE CENTER",
     "meta": "October 2026 · NC",
     "link": "",
@@ -380,8 +380,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "OCT",
+    "day": "28/29",
     "title": "CRIMINAL JUSTICE COORDINATING COUNCIL (CJCC)",
     "meta": "October 28, 2026 October 29, 2026 · LA",
     "link": "",
@@ -389,8 +389,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP",
+    "day": "9",
     "title": "THE CENTER FOR JUST JOURNALISM",
     "meta": "September 9th from 10:00 am to 2:00 pm Few Events in October 2026 · DC",
     "link": "",
@@ -407,8 +407,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "OCT",
+    "day": "26",
     "title": "VOICE OF THE EXPERIENCED (VOTE)",
     "meta": "October 26 November 2 November 9 November 16 November 30 December 7 · LA",
     "link": "",
@@ -425,8 +425,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "DEC",
+    "day": "7",
     "title": "AMERICAN FRIENDS SERVICE COMMITTEE-WV",
     "meta": "December 7th - Charleston, WV November Date - to coincide with PBS air date · WV",
     "link": "",
@@ -444,7 +444,7 @@
   },
   {
     "month": "NOV",
-    "day": "2026",
+    "day": "TBD",
     "title": "FOR THE PEOPLE",
     "meta": "November · CA",
     "link": "",
@@ -461,8 +461,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "OCT",
+    "day": "TBD",
     "title": "AI AND JUSTICE CONSORTIUM",
     "meta": "- June 2026 - NYC - DC (Mid-October) - CA (TBD) · NY, DC, CA",
     "link": "",
@@ -470,8 +470,8 @@
     "past": false
   },
   {
-    "month": "MULTI",
-    "day": "2026",
+    "month": "SEP",
+    "day": "18",
     "title": "DREAM.ORG",
     "meta": "September 11 · September 14 · September 18 · September 26 · October 10 · October 28 · November webinar · CA",
     "link": "",

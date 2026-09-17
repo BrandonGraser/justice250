@@ -367,6 +367,7 @@ h2.sec-title{margin-left:auto;margin-right:auto}
 .feature-event .date{white-space:pre-line;text-align:right}
 .event-browser{position:relative;padding-right:54px}
 .evt-list{display:flex;flex-direction:column;gap:14px;max-height:660px;overflow-y:auto;scroll-behavior:smooth;scrollbar-width:thin;padding:4px 8px 8px 2px}
+.event-date-divider{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:18px 2px 2px}
 .event-scroll-controls{position:absolute;right:0;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px}
 .event-scroll-btn{width:42px;height:42px;border:2px solid var(--ink);border-radius:50%;background:var(--mustard);color:var(--ink);font-size:22px;font-weight:900;line-height:1;cursor:pointer;box-shadow:var(--shadow)}
 .event-scroll-btn:hover{background:var(--mustard-2);transform:translateY(2px);box-shadow:0 1px 0 var(--ink)}
@@ -1103,8 +1104,20 @@ main{display:flex;flex-direction:column}
   }
   function renderEvents(events){
     var list=document.querySelector('#events .evt-list'); if(!list||!events) return;
-    list.innerHTML = events.map(function(ev){
-      return '<div class="evt'+(ev.past?' past':'')+'">'
+    var months={JAN:1,FEB:2,MAR:3,APR:4,MAY:5,JUN:6,JUL:7,AUG:8,SEP:9,OCT:10,NOV:11,DEC:12};
+    var sorted=events.slice().sort(function(a,b){
+      function order(ev){
+        var day=parseInt(ev.day,10);
+        return months[ev.month]&&Number.isFinite(day)?months[ev.month]*100+day:9999;
+      }
+      return order(a)-order(b);
+    });
+    var undatedSectionAdded=false;
+    list.innerHTML = sorted.map(function(ev){
+      var undated=String(ev.day).toUpperCase()==='TBD';
+      var divider=undated&&!undatedSectionAdded?'<div class="event-date-divider">DATES TO BE ANNOUNCED</div>':'';
+      if(undated) undatedSectionAdded=true;
+      return divider+'<div class="evt'+(ev.past?' past':'')+'">'
         +'<div class="when"><div class="m">'+esc(ev.month)+'</div><div class="d'+(/[\/–—-]/.test(String(ev.day))?' range':'')+'">'+esc(ev.day)+'</div></div>'
         +'<div><h4>'+esc(ev.title)+'</h4><div class="meta">'+esc(ev.meta||'')+'</div></div>'
         +(ev.link?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(ev.label||'DETAILS')+'</a>':'<span class="btn-mini" aria-label="Event details coming soon">'+esc(ev.label||'COMING SOON')+'</span>')+'</div>';
