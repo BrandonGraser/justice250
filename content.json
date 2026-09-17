@@ -19,14 +19,14 @@
     "host_title": "HOST AN EVENT",
     "host_intro": "Hosting a Justice & The Next 250 event is an opportunity to bring people together to talk about what you're doing to shape the next 250. The format, the audience, the discussions — that's up to you. The only requirement is that you look ahead, and talk about what your organization is doing to lead the way forward.",
     "host_card1_title": "PLAN IT!",
-    "host_card1_body": "Convene a gathering centered on shaping the next 250. Take a moment for where we've been, but spend most of your time on where we're going. Events should reflect your community and expertise—not a prescribed agenda. They can be fundraisers, town halls, webinars, community events, etc...",
+    "host_card1_body": "Convene a gathering centered on shaping the next 250. Take a moment for where we’ve been, but spend most of your time on where we’re going. Your event should reflect your community and expertise—not a prescribed agenda. We’re here to help with planning, branding resources, promotion, and more. Share your event details with us early so we can list it on the site, amplify it across our channels, and support you as your plans take shape.",
     "host_card2_title": "MAKE IT YOURS",
     "host_card2_body": "Choose a format that fits your community: a town hall, dinner, webinar, fundraiser, community conversation, or another forward-looking gathering.",
     "host_card3_title": "SHARE WHAT HAPPENS",
-    "host_card3_body": "Document the ideas, stories, and commitments that emerge, then share them with the campaign so others can learn from your community.",
+    "host_card3_body": "Document the ideas, stories, and commitments that emerge, then share them with the campaign so others can learn from your community. Click the “Tell us about your event” button below so we can support and help amplify your event.",
     "events_title": "SHOW UP FOR THE NEXT 250.",
     "events_lede": "Find campaign gatherings across the country, from community conversations and leadership convenings to film screenings and public programs.",
-    "feature_date": "NOV 2026 · PBS",
+    "feature_date": "AIRS NOV 2026\nPBS",
     "feature_title": "HOST AN ADVANCE SCREENING",
     "feature_body": "Campaign participants can host an exclusive advance screening before the series airs in November. You'll receive a roughly 50-minute clip, a discussion guide, and marketing materials. We can also connect you with your local PBS station to explore an event partnership.",
     "feature_btn": "REQUEST A SCREENING PACKAGE",
@@ -109,43 +109,448 @@
     }
   ],
   "events": [
-    {
-      "month": "AUG",
-      "day": "18",
-      "title": "PEOPLE'S AGENDA LEADERSHIP CONFERENCE — MONTGOMERY, AL",
-      "meta": "Faith in Action Alabama · Film screening and facilitated community conversation",
-      "link": "",
-      "label": "COMING SOON",
-      "past": false
-    },
-    {
-      "month": "AUG",
-      "day": "20/22",
-      "title": "CRIME & PUNISHMENT SCREENINGS — MISSISSIPPI",
-      "meta": "Clergy for Prison Reform · Virtual screening followed by an in-person gathering in Columbia",
-      "link": "",
-      "label": "COMING SOON",
-      "past": false
-    },
-    {
-      "month": "AUG",
-      "day": "21–23",
-      "title": "REGIONAL JUSTICE CONVENING — CHICAGO, IL",
-      "meta": "Formerly Incarcerated Convicted People & Families Movement · Regional gathering",
-      "link": "",
-      "label": "COMING SOON",
-      "past": false
-    },
-    {
-      "month": "AUG",
-      "day": "29",
-      "title": "RACE UNWRAPPED: ART AS ACTIVISM — LOUISVILLE, KY",
-      "meta": "Louisville Public Media · Community storytelling and visions for the next 250",
-      "link": "",
-      "label": "COMING SOON",
-      "past": false
-    }
-  ],
+  {
+    "month": "JUN",
+    "day": "12",
+    "title": "COMMUNITY SUCCESS INITIATIVE",
+    "meta": "June 12,2026 · NC",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "APR",
+    "day": "2026",
+    "title": "JUSTLEADERSHIPUSA",
+    "meta": "April 2026 · DC",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "JUN",
+    "day": "15",
+    "title": "PRISON JOURNALISM PROJECT",
+    "meta": "June 15, 2026 · Virtual",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MAY",
+    "day": "15",
+    "title": "DAUGHTERS BEYOND INCARCERATION",
+    "meta": "May 15, 2026 · LA",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MAY",
+    "day": "14",
+    "title": "THE COMMUNITY BASED PUBLIC SAFETY COLLECTIVE (FISCALLY SPONSORED BY NEWARK COMMUNITY STREET TEAM)",
+    "meta": "May 14, 2026 · VA",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "JUN",
+    "day": "22",
+    "title": "RECIDIVIZ",
+    "meta": "June 22, 2026 · DC",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "ACLU WV",
+    "meta": "July 1 - Martinsburg July 8 - South Charleston · WV",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "JUL",
+    "day": "6",
+    "title": "COLLECTIVE JUSTICE",
+    "meta": "July 6-10 in New Orleans, LA · WA",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "FORMERLY INCARCERATED CONVICTED PEOPLE & FAMILIES MOVEMENT",
+    "meta": "July 17-19 - Nashville August 21-23 - Chicago · IL, TN, DC, NV",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "AUG",
+    "day": "18",
+    "title": "FAITH IN ACTION ALABAMA",
+    "meta": "Tuesday, August 18th · AL",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "CLERGY FOR PRISON REFORM",
+    "meta": "August 20, 2026 - 6 PM (Virtual Screening) August 22, 2026 - Columbia, MS (In Person0 · MS",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "LOUISVILLE PUBLIC MEDIA",
+    "meta": "June 24 - Waterfront Wednesday August 18 - at Louisville Leadership Forum August 29 - LPM's \"Race Unwrapped: Art As Activism\" September 23 - Waterfront Wednesday · KY",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "OKLAHOMANS FOR CRIMINAL JUSTICE REFORM",
+    "meta": "August 31 September 17 · OK",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "10",
+    "title": "JUST SAFE (FORMERLY ALLIANCE FOR SAFETY AND JUSTICE)",
+    "meta": "Thursday, September 10th at 6 pm ET · DC",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "ACLU OF KENTUCKY",
+    "meta": "Date TBD · KY",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "OCT",
+    "day": "10",
+    "title": "ACLU OF NORTH CAROLINA",
+    "meta": "October 10, 2026 - Raleigh, Durham · NC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "LOUISIANA CENTER FOR CHILDREN'S RIGHTS",
+    "meta": "Date TBD · LA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "FAL",
+    "day": "2026",
+    "title": "NATIVE WINGS LIKE AN EAGLE INC",
+    "meta": "Fall 2026 · OK",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "ADVANCE MARYLAND, MARYLAND YOUTH JUSTICE COALITION",
+    "meta": "September 18, 2026 October 12th, 2026 · MD",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "BLOCK BUILDERZ/RETURN TO HOPE",
+    "meta": "Shooting a Documentary; TBD on event · OK",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "10",
+    "title": "THE REACH INITIATIVE",
+    "meta": "September 10, 2026 · WV",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "SEP",
+    "day": "17",
+    "title": "REDEMPTION EARNED",
+    "meta": "September 17 · AL",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "17",
+    "title": "MISSISSIPPI IMPACT COALITION FORMERLY MISSISSIPPI PRISON REFORM COALITION",
+    "meta": "September 17, 2026 · MS",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "17",
+    "title": "RESPONSIBLE BUSINESS INITIATIVE FOR JUSTICE (RBIJ) FISCALLY SPONSORED BY NEO PHILANTHROPY.",
+    "meta": "Thursday September 17, 2026, 2:00pm - 5:30pm · DC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "4",
+    "title": "ACLU OF OKLAHOMA FOUNDATION",
+    "meta": "September 4th, 6 - 9 PM · OK",
+    "link": "",
+    "label": "PAST EVENT",
+    "past": true
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "MEA // HOWARD UNIVERSITY AI INITIATIVE",
+    "meta": "September/October · MA, NY",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "OCT",
+    "day": "6",
+    "title": "POLICING PROJECT AT NYU LAW",
+    "meta": "October 6, 1:30-2:30pm ET · NY",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "ALABAMA APPLESEED CENTER FOR LAW & JUSTICE",
+    "meta": "Oct. 7 and 8 · AL",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "OCT",
+    "day": "18",
+    "title": "WESTSIDE SPONSORING COMMITTEE",
+    "meta": "October 18, 2026 at 4:30PM · LA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "OCT",
+    "day": "2026",
+    "title": "NC JUSTICE CENTER",
+    "meta": "October 2026 · NC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "CRIMINAL JUSTICE COORDINATING COUNCIL (CJCC)",
+    "meta": "October 28, 2026 October 29, 2026 · LA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "THE CENTER FOR JUST JOURNALISM",
+    "meta": "September 9th from 10:00 am to 2:00 pm Few Events in October 2026 · DC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "OCT",
+    "day": "22",
+    "title": "PROMISE OF JUSTICE INITIATIVE",
+    "meta": "October 22, 2026 - Promise Gardens, located at 1024 Elysian Fields Avenue, New Orleans, LA 70117 · LA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "VOICE OF THE EXPERIENCED (VOTE)",
+    "meta": "October 26 November 2 November 9 November 16 November 30 December 7 · LA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "NOV",
+    "day": "19",
+    "title": "FAMM",
+    "meta": "November 19 · DC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "AMERICAN FRIENDS SERVICE COMMITTEE-WV",
+    "meta": "December 7th - Charleston, WV November Date - to coincide with PBS air date · WV",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "18",
+    "title": "YOUTH FIRST JUSTICE COLLABORATIVE FISCALLY SPONSORED BY NEW VENTURE FUND.",
+    "meta": "September 18 - Philly · NY, PA, LA, MS, CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "NOV",
+    "day": "2026",
+    "title": "FOR THE PEOPLE",
+    "meta": "November · CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "SEP",
+    "day": "25",
+    "title": "NC FAITH AND FREEDOM COALITION",
+    "meta": "September 25-27 (shooting 9/26) · NC",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "AI AND JUSTICE CONSORTIUM",
+    "meta": "- June 2026 - NYC - DC (Mid-October) - CA (TBD) · NY, DC, CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "MULTI",
+    "day": "2026",
+    "title": "DREAM.ORG",
+    "meta": "September 11 · September 14 · September 18 · September 26 · October 10 · October 28 · November webinar · CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "MISSOURI JUSTICE COALTION",
+    "meta": "Date TBD · MO",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "SELMA CENTER FOR NONVIOLENCE",
+    "meta": "Date TBD · AL",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "THE ANTI-RECIDIVISM COALITION",
+    "meta": "Date TBD · CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "THE JULIUS JONES INSTITUTE",
+    "meta": "Date TBD · OK",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "WE BUILD THE BLOCK",
+    "meta": "Date TBD · NY",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "ZEALOUS",
+    "meta": "Date TBD · GA, MS, CA",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "IMPACT JUSTICE",
+    "meta": "Date TBD",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  },
+  {
+    "month": "DATE",
+    "day": "TBD",
+    "title": "PRISON FELLOWSHIP",
+    "meta": "Date TBD",
+    "link": "",
+    "label": "COMING SOON",
+    "past": false
+  }
+],
   "videos": [
     {
       "url": "https://www.instagram.com/thejusttrust/",

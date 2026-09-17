@@ -19,7 +19,7 @@ Mirrors the original site's flow, with the new sections slotted in:
 2. About Justice & The Next 250
 3. Why This Campaign? Why Now? — *blue section*
 4. **Campaign Updates** (new — Wix Blog in the live build)
-5. Get Involved — *orange section*
+5. Join the Campaign — *orange section*
 6. Host an Event — *yellow section, animated clouds*
 7. **Events** (new — Wix Events in the live build)
 8. **Justice & The Next 250 Out in the World** (cross-platform campaign content)
