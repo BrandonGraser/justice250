@@ -1102,26 +1102,49 @@ main{display:flex;flex-direction:column}
       };
     });
   }
-  function renderEvents(events){
+  var eventRefreshTimer;
+  function renderEvents(events,scrollToNext){
     var list=document.querySelector('#events .evt-list'); if(!list||!events) return;
     var months={JAN:1,FEB:2,MAR:3,APR:4,MAY:5,JUN:6,JUL:7,AUG:8,SEP:9,OCT:10,NOV:11,DEC:12};
-    var sorted=events.slice().sort(function(a,b){
-      function order(ev){
-        var day=parseInt(ev.day,10);
-        return months[ev.month]&&Number.isFinite(day)?months[ev.month]*100+day:9999;
-      }
-      return order(a)-order(b);
-    });
+    var monthNames=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    var now=new Date();
+    var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+    function datesFor(ev){
+      if(Array.isArray(ev.dates)) return ev.dates.filter(function(date){return /^\d{4}-\d{2}-\d{2}$/.test(date)}).sort();
+      var day=parseInt(ev.day,10),month=months[ev.month];
+      return month&&day?['2026-'+String(month).padStart(2,'0')+'-'+String(day).padStart(2,'0')]:[];
+    }
+    var sorted=events.map(function(ev){
+      var dates=datesFor(ev),next=dates.find(function(date){return date>=today});
+      var past=dates.length?!next:!!ev.past&&String(ev.day).toUpperCase()!=='TBD';
+      return {event:ev,dates:dates,next:next,past:past,group:past?0:next?1:2,order:past?dates[0]||'0000-01-01':next||'9999-12-31'};
+    }).sort(function(a,b){return a.group-b.group||a.order.localeCompare(b.order)});
     var undatedSectionAdded=false;
-    list.innerHTML = sorted.map(function(ev){
-      var undated=String(ev.day).toUpperCase()==='TBD';
+    list.innerHTML = sorted.map(function(item){
+      var ev=item.event,undated=item.group===2;
       var divider=undated&&!undatedSectionAdded?'<div class="event-date-divider">DATES TO BE ANNOUNCED</div>':'';
       if(undated) undatedSectionAdded=true;
-      return divider+'<div class="evt'+(ev.past?' past':'')+'">'
-        +'<div class="when"><div class="m">'+esc(ev.month)+'</div><div class="d'+(/[\/–—-]/.test(String(ev.day))?' range':'')+'">'+esc(ev.day)+'</div></div>'
+      var badgeMonth=ev.month,badgeDay=ev.day;
+      if(item.next&&item.dates.length>1){
+        var badgeStart='2026-'+String(months[ev.month]||0).padStart(2,'0')+'-'+String(parseInt(ev.day,10)||0).padStart(2,'0');
+        if(badgeStart<today){badgeMonth=monthNames[Number(item.next.slice(5,7))-1];badgeDay=String(Number(item.next.slice(8,10)))}
+      }
+      var label=item.past?'PAST EVENT':ev.label==='PAST EVENT'?'COMING SOON':ev.label||'COMING SOON';
+      return divider+'<div class="evt'+(item.past?' past':'')+'" data-event-status="'+(item.past?'past':undated?'undated':'upcoming')+'">'
+        +'<div class="when"><div class="m">'+esc(badgeMonth)+'</div><div class="d'+(/[\/–—-]/.test(String(badgeDay))?' range':'')+'">'+esc(badgeDay)+'</div></div>'
         +'<div><h4>'+esc(ev.title)+'</h4><div class="meta">'+esc(ev.meta||'')+'</div></div>'
-        +(ev.link?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(ev.label||'DETAILS')+'</a>':'<span class="btn-mini" aria-label="Event details coming soon">'+esc(ev.label||'COMING SOON')+'</span>')+'</div>';
+        +(ev.link&&!item.past?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(label)+'</a>':'<span class="btn-mini">'+esc(label)+'</span>')+'</div>';
     }).join('');
+    if(scrollToNext!==false){
+      var first=list.querySelector('[data-event-status="upcoming"]')||list.querySelector('.event-date-divider');
+      if(first){
+        var top=first.getBoundingClientRect().top-list.getBoundingClientRect().top+list.scrollTop;
+        list.scrollTo({top:top,behavior:'instant'});
+      }
+    }
+    clearTimeout(eventRefreshTimer);
+    var midnight=new Date(now);midnight.setHours(24,0,0,100);
+    eventRefreshTimer=setTimeout(function(){renderEvents(events,false)},midnight-now);
   }
   document.querySelectorAll('[data-event-scroll]').forEach(function(button){
     button.addEventListener('click',function(){
@@ -1165,7 +1188,23 @@ main{display:flex;flex-direction:column}
       return fetch('content.json?v='+new Date().getTime(),{cache:'no-store'})
         .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
     })
-    .then(function(c){if(c)apply(c)})
+    .then(function(c){
+      if(!c)return;
+      if(!c.events||!c.events.some(function(ev){return !Array.isArray(ev.dates)})){apply(c);return}
+      return fetch('content.json?v='+new Date().getTime(),{cache:'no-store'})
+        .then(function(r){return r.ok?r.json():null})
+        .then(function(seed){
+          if(seed&&seed.events){
+            var datesByTitle={};
+            seed.events.forEach(function(ev){datesByTitle[String(ev.title||'').trim().toUpperCase()]=ev.dates});
+            c.events.forEach(function(ev){
+              var dates=datesByTitle[String(ev.title||'').trim().toUpperCase()];
+              if(!Array.isArray(ev.dates)&&Array.isArray(dates))ev.dates=dates.slice();
+            });
+          }
+          apply(c);
+        }).catch(function(){apply(c)});
+    })
     .catch(function(){});
 })();
 

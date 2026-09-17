@@ -152,7 +152,7 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
 
     <section class="panel" id="panel-events">
       <h2>Events — "Show up for the next 250"</h2>
-      <p class="hint">These are the rows listed in the Events section. Mark an event as past to gray it out.</p>
+      <p class="hint">These rows appear in the Events section. Add confirmed dates in YYYY-MM-DD format; the site automatically marks events as past and opens the list at the next upcoming event.</p>
       <button class="btn primary" id="event-new" type="button">＋ NEW EVENT</button>
       <div id="event-editor"></div>
       <div id="event-list" style="margin-top:18px"></div>
@@ -186,7 +186,7 @@ var TEXT_LABELS={
   'Media section':{media_title:'Section title',media_lede:'Intro line'},
   'Newsletter & footer':{newsletter_title:'Newsletter heading',newsletter_body:'Newsletter text',footer_tagline:'Footer tagline',contact_email:'Contact email'}
 };
-var MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+var MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC','FALL','SEP/OCT','DATE'];
 
 function $(s){return document.querySelector(s)}
 function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
@@ -368,11 +368,16 @@ var blogEd=listEditor({
 function renderBlogList(){blogEd.renderList()}
 
 /* events */
+function eventIsPast(ev){
+  if(!Array.isArray(ev.dates)||!ev.dates.length)return !!ev.past;
+  var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  return ev.dates.every(function(date){return date<today});
+}
 var eventEd=listEditor({
   key:'events',listSel:'#event-list',editorSel:'#event-editor',newBtn:'#event-new',
   noun:'Event',newTitle:'NEW EVENT',editTitle:'EDIT EVENT',
-  blank:function(){return{month:'SEP',day:'1',title:'',meta:'',link:'',label:'RSVP',past:false}},
-  rowHtml:function(ev){return '<span class="pill'+(ev.past?'':' news')+'">'+esc(ev.month)+' '+esc(ev.day)+'</span><div class="t"><b>'+esc(ev.title||'(untitled)')+'</b><span>'+(ev.past?'Past event':'Upcoming')+'</span></div>'},
+  blank:function(){return{month:'DATE',day:'TBD',title:'',meta:'',link:'',label:'COMING SOON',dates:[]}},
+  rowHtml:function(ev){var past=eventIsPast(ev);return '<span class="pill'+(past?'':' news')+'">'+esc(ev.month)+' '+esc(ev.day)+'</span><div class="t"><b>'+esc(ev.title||'(untitled)')+'</b><span>'+(past?'Past event':ev.dates&&ev.dates.length?'Upcoming':'Date TBD')+'</span></div>'},
   formHtml:function(ev){return ''+
     '<div class="row3">'+
     '<div class="field"><label>Month</label><select id="f-month">'+MONTHS.map(function(m){return '<option'+(ev.month===m?' selected':'')+'>'+m+'</option>'}).join('')+'</select></div>'+
@@ -380,14 +385,27 @@ var eventEd=listEditor({
     '<div class="field"><label>Button label</label><input type="text" id="f-label" value="'+esc(ev.label||'RSVP')+'"></div></div>'+
     '<div class="field"><label>Event title</label><input type="text" id="f-title" value="'+esc(ev.title)+'"></div>'+
     '<div class="field"><label>Detail line (location, partner, etc.)</label><input type="text" id="f-meta" value="'+esc(ev.meta||'')+'"></div>'+
+    '<div class="field"><label>Confirmed date(s), comma-separated (YYYY-MM-DD)</label><input type="text" id="f-dates" value="'+esc((ev.dates||[]).join(', '))+'" placeholder="2026-09-18, 2026-10-12"></div>'+
     '<div class="field"><label>RSVP / info link (optional)</label><input type="url" id="f-link" value="'+esc(ev.link||'')+'" placeholder="https://…"></div>'+
-    '<div class="field"><label><input type="checkbox" id="f-past"'+(ev.past?' checked':'')+' style="width:auto;margin-right:8px">This event already happened</label></div>'},
+    '<p class="note">Leave confirmed dates blank only when the date is still TBD. For a multi-day event, include its final day.</p>'},
   collect:function(box){
     var t=box.querySelector('#f-title').value.trim();
     if(!t)return 'Give the event a title first.';
-    return{month:box.querySelector('#f-month').value,day:box.querySelector('#f-day').value.trim()||'TBD',
+    var raw=box.querySelector('#f-dates').value.trim();
+    var dates=raw?raw.split(',').map(function(s){return s.trim()}).filter(Boolean):[];
+    var valid=dates.every(function(s){
+      var m=s.match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!m)return false;
+      var d=new Date(Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3])));
+      return d.getUTCFullYear()===Number(m[1])&&d.getUTCMonth()+1===Number(m[2])&&d.getUTCDate()===Number(m[3]);
+    });
+    if(!valid)return 'Enter each confirmed date as YYYY-MM-DD, separated by commas.';
+    dates.sort();
+    var month=box.querySelector('#f-month').value,day=box.querySelector('#f-day').value.trim()||'TBD';
+    if(!dates.length&&day!=='TBD')return 'Add a confirmed date, or change the badge day to TBD.';
+    if(dates.length&&day==='TBD'){month=MONTHS[Number(dates[0].slice(5,7))-1];day=String(Number(dates[0].slice(8,10)))}
+    return{month:month,day:day,dates:dates,
       title:t,meta:box.querySelector('#f-meta').value.trim(),link:box.querySelector('#f-link').value.trim(),
-      label:box.querySelector('#f-label').value.trim()||'RSVP',past:box.querySelector('#f-past').checked};
+      label:box.querySelector('#f-label').value.trim()||'COMING SOON'};
   }
 });
 function renderEventList(){eventEd.renderList()}
