@@ -708,7 +708,7 @@ main{display:flex;flex-direction:column}
           </div>
         </a>
       </div>
-      <div class="media-cta reveal"><a class="btn solid" href="https://www.thejusttrust.org/c3-news" target="_blank" rel="noopener">VIEW ALL BLOG POSTS →</a></div>
+      <div class="media-cta reveal" id="blog-show-all-wrap" hidden><button class="btn solid" id="blog-show-all" type="button">VIEW ALL BLOG POSTS →</button></div>
     </div>
   </section>
 
@@ -1056,9 +1056,10 @@ main{display:flex;flex-direction:column}
     return m?m[1]:null;
   }
 
-  function renderBlog(posts){
+  function renderBlog(posts,expanded){
     var grid=document.querySelector('#updates .cards'); if(!grid||!posts) return;
-    grid.innerHTML = posts.map(function(p,i){
+    var visible=expanded?posts:posts.slice(0,6);
+    grid.innerHTML = visible.map(function(p,i){
       var cat = CAT[p.category]||CAT.news;
       var tints=['sky','orange','mustard'];
       var thumb = p.image
@@ -1079,6 +1080,12 @@ main{display:flex;flex-direction:column}
       });
     });
     bindFilters();
+    var showAll=document.getElementById('blog-show-all');
+    if(showAll){
+      var showAllWrap=document.getElementById('blog-show-all-wrap');
+      if(showAllWrap)showAllWrap.hidden=posts.length<=6||!!expanded;
+      showAll.onclick=function(){renderBlog(posts,true)};
+    }
   }
   function openPost(p){
     var old=document.getElementById('post-modal'); if(old) old.remove();
@@ -1095,14 +1102,16 @@ main{display:flex;flex-direction:column}
   }
   function bindFilters(){
     var chips=document.querySelectorAll('.chip'),cards=document.querySelectorAll('.card[data-cat]');
+    function applyFilter(f){cards.forEach(function(card){card.style.display=(f==='all'||card.dataset.cat===f)?'':'none'})}
     chips.forEach(function(c){
       c.onclick=function(){
         chips.forEach(function(x){x.setAttribute('aria-pressed','false')});
         c.setAttribute('aria-pressed','true');
-        var f=c.dataset.f;
-        cards.forEach(function(card){card.style.display=(f==='all'||card.dataset.cat===f)?'':'none'});
+        applyFilter(c.dataset.f);
       };
     });
+    var active=[].find.call(chips,function(c){return c.getAttribute('aria-pressed')==='true'});
+    applyFilter(active?active.dataset.f:'all');
   }
   var eventRefreshTimer;
   function renderEvents(events,scrollToNext){
@@ -1160,7 +1169,7 @@ main{display:flex;flex-direction:column}
     function tile(v,big,i){
       var id=ytId(v.url);
       var href=id?('https://www.youtube.com/watch?v='+id):(v.url||'#');
-      var thumb=id?'<img class="thumb-img" src="https://i.ytimg.com/vi/'+id+'/hqdefault.jpg" alt="" onerror="this.remove()">':'';
+      var thumb=v.image?'<img class="thumb-img" src="'+esc(v.image)+'" alt="">':id?'<img class="thumb-img" src="https://i.ytimg.com/vi/'+id+'/hqdefault.jpg" alt="" onerror="this.remove()">':'';
       if(!thumb&&clouds.length){thumb='<img class="cloud-img" src="'+clouds[i%clouds.length]+'" alt="">';}
       return '<a class="vid '+(big?'big':'small '+(i%2?'s2':'s1'))+'" href="'+esc(href)+'" target="_blank" rel="noopener">'
         +'<div class="screen">'+thumb+'<span class="play"></span>'+(v.duration?'<span class="dur">'+esc(v.duration)+'</span>':'')+'</div>'

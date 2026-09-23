@@ -86,6 +86,29 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
 .setup a{color:var(--sky)}
 .dirty-dot{width:9px;height:9px;border-radius:50%;background:var(--mustard);display:inline-block;margin-left:6px;visibility:hidden}
 .dirty .dirty-dot{visibility:visible}
+.manager-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:20px}
+.manager-head .hint{margin:4px 0 0}.manager-actions{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.count-chip{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--sky3);border:2px solid var(--ink);border-radius:999px;padding:7px 11px;white-space:nowrap}
+.content-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}
+.content-library .item-row{display:flex;align-items:stretch;flex-direction:column;padding:0;margin:0;overflow:hidden;border-color:var(--ink);box-shadow:0 2px 0 var(--ink)}
+.content-preview{position:relative;min-height:134px;background:#d8dde0;overflow:hidden;border-bottom:2px solid var(--ink)}
+.content-preview img{width:100%;height:100%;min-height:134px;position:absolute;inset:0;object-fit:cover}
+.content-preview.empty{display:grid;place-items:center;background:var(--mustard);font-size:34px;font-weight:700}
+.content-card-body{padding:15px 16px 13px;flex:1}.content-card-body h3{font-size:15px;line-height:1.28;margin:9px 0 5px}
+.content-card-body p{font-size:11.5px;color:var(--ink-soft);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.card-tools{display:flex;gap:7px;align-items:center;padding:10px 12px;background:#f7f8f8;border-top:1.5px solid var(--line)}
+.card-tools .btn{box-shadow:none;padding:6px 10px}.card-tools .edit-btn{margin-left:auto}
+.featured-flag{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:4px 9px;font-size:9px;font-weight:700;letter-spacing:.08em;z-index:2}
+.platform-mark{display:grid;place-items:center;min-height:134px;height:100%;font-size:18px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--sky3)}
+.editor-box.pro-editor{padding:0;overflow:hidden;background:#fff}.editor-top{background:var(--ink);color:#fff;padding:18px 22px}.editor-top h3{margin:0 0 3px}.editor-top p{font-size:11.5px;color:rgba(255,255,255,.7)}
+.editor-content{padding:22px}.form-section{padding-bottom:18px;margin-bottom:18px;border-bottom:1.5px solid var(--line)}
+.form-section:last-of-type{border-bottom:0}.form-section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+.choice-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;display:flex;gap:9px;align-items:flex-start;background:#fff}.choice:has(input:checked){border-color:var(--sky);background:#eef8ff}.choice input{margin-top:3px}.choice b{display:block;font-size:12px}.choice span{display:block;font-size:10.5px;color:var(--ink-soft);margin-top:2px}
+details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:17px}details.advanced summary{cursor:pointer;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase}details.advanced[open] summary{margin-bottom:14px}
+.image-picker{display:grid;grid-template-columns:150px 1fr;gap:15px;align-items:center}.image-preview{height:98px;border:2px dashed var(--line);border-radius:12px;overflow:hidden;background:#f1f3f4;display:grid;place-items:center;font-size:11px;color:var(--ink-soft)}.image-preview img{width:100%;height:100%;object-fit:cover}
+.empty-library{grid-column:1/-1;padding:38px;text-align:center;border:2px dashed var(--line);border-radius:16px;color:var(--ink-soft)}
+@media (max-width:760px){.manager-head{align-items:stretch;flex-direction:column}.manager-actions{justify-content:space-between}.content-library{grid-template-columns:1fr}.image-picker,.choice-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -114,9 +137,9 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
   <nav class="tabs">
     <button data-tab="text" class="active" type="button">SITE TEXT</button>
     <button data-tab="images" type="button">IMAGES</button>
-    <button data-tab="blog" type="button">BLOG POSTS</button>
+    <button data-tab="blog" type="button">CAMPAIGN UPDATES</button>
     <button data-tab="events" type="button">EVENTS</button>
-    <button data-tab="videos" type="button">VIDEOS</button>
+    <button data-tab="videos" type="button">OUT IN THE WORLD</button>
   </nav>
   <main>
     <section class="panel active" id="panel-text">
@@ -143,11 +166,9 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
     </section>
 
     <section class="panel" id="panel-blog">
-      <h2>Blog posts</h2>
-      <p class="hint">Fill out the form and the post appears on the site automatically — newest first. Clicking a card on the site opens the full post.</p>
-      <button class="btn primary" id="blog-new" type="button">＋ NEW POST</button>
+      <div class="manager-head"><div><h2>Campaign updates</h2><p class="hint">Manage the stories in “Campaign Updates: From the Blog.” The first six appear initially; the site reveals the rest only when a reader asks to view all.</p></div><div class="manager-actions"><span class="count-chip" id="blog-count">0 stories</span><button class="btn primary" id="blog-new" type="button">＋ ADD STORY</button></div></div>
       <div id="blog-editor"></div>
-      <div id="blog-list" style="margin-top:18px"></div>
+      <div id="blog-list" class="content-library"></div>
     </section>
 
     <section class="panel" id="panel-events">
@@ -159,11 +180,9 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
     </section>
 
     <section class="panel" id="panel-videos">
-      <h2>Videos</h2>
-      <p class="hint">Paste a link to campaign content on Instagram, YouTube, or another social platform. The first item in the list is featured large.</p>
-      <button class="btn primary" id="video-new" type="button">＋ NEW VIDEO</button>
+      <div class="manager-head"><div><h2>Justice &amp; The Next 250 Out in the World</h2><p class="hint">Build a growing gallery of campaign moments from Instagram, YouTube, and the web. The first item is the large featured story; everything else automatically fills the grid.</p></div><div class="manager-actions"><span class="count-chip" id="video-count">0 moments</span><button class="btn primary" id="video-new" type="button">＋ ADD MOMENT</button></div></div>
       <div id="video-editor"></div>
-      <div id="video-list" style="margin-top:18px"></div>
+      <div id="video-list" class="content-library"></div>
     </section>
   </main>
 </div>
@@ -291,13 +310,15 @@ $('#about-photo-reset').addEventListener('click',function(){
 function listEditor(cfg){
   function renderList(){
     var host=$(cfg.listSel); host.innerHTML='';
+    if(cfg.countSel){var n=content[cfg.key].length;$(cfg.countSel).textContent=n+' '+(n===1?cfg.countOne:cfg.countMany)}
+    if(!content[cfg.key].length){host.innerHTML='<div class="empty-library">Nothing here yet. Use the add button above to create the first '+cfg.noun.toLowerCase()+'.</div>';return}
     content[cfg.key].forEach(function(item,i){
       var row=document.createElement('div'); row.className='item-row';
-      row.innerHTML=cfg.rowHtml(item)+
-        '<button class="btn small" data-a="up" '+(i===0?'disabled':'')+' type="button">↑</button>'+
-        '<button class="btn small" data-a="down" '+(i===content[cfg.key].length-1?'disabled':'')+' type="button">↓</button>'+
-        '<button class="btn small" data-a="edit" type="button">EDIT</button>'+
+      var controls='<button class="btn small" data-a="up" '+(i===0?'disabled':'')+' type="button" title="Move earlier">↑</button>'+
+        '<button class="btn small" data-a="down" '+(i===content[cfg.key].length-1?'disabled':'')+' type="button" title="Move later">↓</button>'+
+        '<button class="btn small'+(cfg.pro?' edit-btn':'')+'" data-a="edit" type="button">EDIT</button>'+
         '<button class="btn small danger" data-a="del" type="button">DELETE</button>';
+      row.innerHTML=cfg.rowHtml(item,i)+(cfg.pro?'<div class="card-tools">'+controls+'</div>':controls);
       row.addEventListener('click',function(e){
         var a=e.target.dataset.a; if(!a)return;
         if(a==='del'){if(confirm('Delete "'+(item.title||'this item')+'"?')){content[cfg.key].splice(i,1);setDirty(true);renderList()}}
@@ -312,9 +333,9 @@ function listEditor(cfg){
     var isNew=i==null;
     var item=isNew?cfg.blank():JSON.parse(JSON.stringify(content[cfg.key][i]));
     var box=$(cfg.editorSel);
-    box.innerHTML='<div class="editor-box"><h3>'+(isNew?cfg.newTitle:cfg.editTitle)+'</h3>'+cfg.formHtml(item)+
+    box.innerHTML='<div class="editor-box'+(cfg.pro?' pro-editor':'')+'">'+(cfg.pro?'<div class="editor-top"><h3>'+(isNew?cfg.newTitle:cfg.editTitle)+'</h3><p>'+cfg.editorHint+'</p></div><div class="editor-content">':'<h3>'+(isNew?cfg.newTitle:cfg.editTitle)+'</h3>')+cfg.formHtml(item)+
       '<div class="actions"><button class="btn primary" data-a="save" type="button">SAVE '+cfg.noun.toUpperCase()+'</button>'+
-      '<button class="btn" data-a="cancel" type="button">CANCEL</button></div></div>';
+      '<button class="btn" data-a="cancel" type="button">CANCEL</button></div>'+(cfg.pro?'</div>':'')+'</div>';
     if(cfg.afterForm)cfg.afterForm(box,item);
     box.querySelector('[data-a=save]').addEventListener('click',function(){
       var res=cfg.collect(box,item);
@@ -333,36 +354,39 @@ function listEditor(cfg){
 /* blog */
 var blogEd=listEditor({
   key:'blog',listSel:'#blog-list',editorSel:'#blog-editor',newBtn:'#blog-new',
-  noun:'Post',newTitle:'NEW BLOG POST',editTitle:'EDIT BLOG POST',
+  noun:'Story',newTitle:'CREATE A CAMPAIGN UPDATE',editTitle:'EDIT CAMPAIGN UPDATE',pro:true,countSel:'#blog-count',countOne:'story',countMany:'stories',editorHint:'Only the essentials are required. You can write the story here or send readers to an existing article.',
   blank:function(){var d=new Date();return{title:'',category:'news',date:MONTHS[d.getMonth()]+' '+d.getFullYear(),author:'By the campaign team',readTime:'4 min read',excerpt:'',body:'',image:'',link:''}},
-  rowHtml:function(p){return '<span class="pill '+p.category+'">'+({news:'News',persp:'Perspective',recap:'Recap'})[p.category]+'</span><div class="t"><b>'+esc(p.title||'(untitled)')+'</b><span>'+esc(p.date)+'</span></div>'},
+  rowHtml:function(p){var cat=({news:'News',persp:'Perspective',recap:'Event recap'})[p.category]||'News';return '<div class="content-preview'+(p.image?'':' empty')+'">'+(p.image?'<img src="'+esc(p.image)+'" alt="">':'JN250')+'</div><div class="content-card-body"><div class="card-meta"><span class="pill '+esc(p.category)+'">'+cat+'</span><span>'+esc(p.date||'No date')+'</span></div><h3>'+esc(p.title||'(untitled)')+'</h3><p>'+esc(p.excerpt||'No card preview yet.')+'</p></div>'},
   formHtml:function(p){return ''+
-    '<div class="field"><label>Post title</label><input type="text" id="f-title" value="'+esc(p.title)+'"></div>'+
-    '<div class="row3">'+
+    '<div class="form-section"><div class="form-section-title">1 · Story basics</div><div class="field"><label>Headline</label><input type="text" id="f-title" value="'+esc(p.title)+'" placeholder="What should readers know?"></div>'+
+    '<div class="row2">'+
     '<div class="field"><label>Category</label><select id="f-cat">'+
       '<option value="news"'+(p.category==='news'?' selected':'')+'>News</option>'+
       '<option value="persp"'+(p.category==='persp'?' selected':'')+'>Perspective</option>'+
       '<option value="recap"'+(p.category==='recap'?' selected':'')+'>Event recap</option></select></div>'+
-    '<div class="field"><label>Date shown</label><input type="text" id="f-date" value="'+esc(p.date)+'"></div>'+
-    '<div class="field"><label>Read time</label><input type="text" id="f-read" value="'+esc(p.readTime||'')+'"></div></div>'+
-    '<div class="field"><label>Author line</label><input type="text" id="f-author" value="'+esc(p.author||'')+'"></div>'+
-    '<div class="field"><label>Short preview (shown on the card)</label><textarea id="f-excerpt">'+esc(p.excerpt)+'</textarea></div>'+
-    '<div class="field"><label>Full post (opens when a reader clicks the card — blank line between paragraphs)</label><textarea class="tall" id="f-body">'+esc(p.body||'')+'</textarea></div>'+
-    '<div class="field"><label>Post image (optional)</label><input type="file" id="f-image" accept="image/*"><p class="note" id="f-image-note">'+(p.image?'Current image: '+esc(p.image):'No image — the card shows a placeholder.')+'</p></div>'+
-    '<div class="field"><label>Or link the card to an external page instead (optional)</label><input type="url" id="f-link" value="'+esc(p.link||'')+'" placeholder="https://…"></div>'},
+    '<div class="field"><label>Date readers see</label><input type="text" id="f-date" value="'+esc(p.date)+'" placeholder="SEP 2026"></div></div></div>'+
+    '<div class="form-section"><div class="form-section-title">2 · Card preview</div><div class="field"><label>Short summary</label><textarea id="f-excerpt" placeholder="One or two sentences that invite someone to open the story.">'+esc(p.excerpt)+'</textarea></div>'+
+    '<div class="image-picker"><div class="image-preview" id="f-image-preview">'+(p.image?'<img src="'+esc(p.image)+'" alt="">':'No image selected')+'</div><div><label class="note" style="display:block;margin-bottom:7px">FEATURE IMAGE · OPTIONAL</label><input type="file" id="f-image" accept="image/*"><p class="note" id="f-image-note">Recommended: a wide landscape photo.</p></div></div></div>'+
+    '<div class="form-section"><div class="form-section-title">3 · Where the story opens</div><div class="choice-row"><label class="choice"><input type="radio" name="destination" value="onsite"'+(!p.link?' checked':'')+'><span><b>Write it here</b><span>Opens in a clean reader on this site.</span></span></label><label class="choice"><input type="radio" name="destination" value="external"'+(p.link?' checked':'')+'><span><b>Link elsewhere</b><span>Sends readers to an existing article or page.</span></span></label></div><div id="onsite-fields" style="margin-top:14px"><div class="field"><label>Story body</label><textarea class="tall" id="f-body" placeholder="Write the story here. Leave a blank line between paragraphs.">'+esc(p.body||'')+'</textarea></div></div><div id="external-fields" style="margin-top:14px"><div class="field"><label>Article URL</label><input type="url" id="f-link" value="'+esc(p.link||'')+'" placeholder="https://…"></div></div></div>'+
+    '<details class="advanced"><summary>Optional byline &amp; read time</summary><div class="row2"><div class="field"><label>Author line</label><input type="text" id="f-author" value="'+esc(p.author||'')+'"></div><div class="field"><label>Read time</label><input type="text" id="f-read" value="'+esc(p.readTime||'')+'"></div></div></details>'},
   afterForm:function(box,item){
+    function mode(){var external=box.querySelector('[name=destination]:checked').value==='external';box.querySelector('#onsite-fields').style.display=external?'none':'';box.querySelector('#external-fields').style.display=external?'':'none'}
+    box.querySelectorAll('[name=destination]').forEach(function(r){r.addEventListener('change',mode)});mode();
     box.querySelector('#f-image').addEventListener('change',function(){
       var f=this.files[0]; if(!f)return;
-      uploadImage(f,function(path){item.image=path;box.querySelector('#f-image-note').textContent='Current image: '+path});
+      uploadImage(f,function(path){item.image=path;box.querySelector('#f-image-note').textContent='Image uploaded and ready to publish.';box.querySelector('#f-image-preview').innerHTML='<img src="'+esc(path)+'" alt="">'});
     });
   },
   collect:function(box,item){
     var t=box.querySelector('#f-title').value.trim();
     if(!t)return 'Give the post a title first.';
+    var external=box.querySelector('[name=destination]:checked').value==='external';
+    var link=external?box.querySelector('#f-link').value.trim():'';
+    if(external&&!/^https?:/.test(link))return 'Add a complete article link beginning with http.';
     return{title:t,category:box.querySelector('#f-cat').value,date:box.querySelector('#f-date').value.trim(),
       author:box.querySelector('#f-author').value.trim(),readTime:box.querySelector('#f-read').value.trim(),
       excerpt:box.querySelector('#f-excerpt').value.trim(),body:box.querySelector('#f-body').value.trim(),
-      image:item.image||'',link:box.querySelector('#f-link').value.trim()};
+      image:item.image||'',link:link};
   }
 });
 function renderBlogList(){blogEd.renderList()}
@@ -412,24 +436,27 @@ function renderEventList(){eventEd.renderList()}
 
 /* videos */
 function ytId(url){var m=String(url||'').match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/);return m?m[1]:null}
+function platformName(url){url=String(url||'').toLowerCase();if(url.indexOf('instagram.com')>-1)return'Instagram';if(url.indexOf('youtube.com')>-1||url.indexOf('youtu.be')>-1)return'YouTube';if(url.indexOf('tiktok.com')>-1)return'TikTok';if(url.indexOf('facebook.com')>-1)return'Facebook';return'Web'}
 var videoEd=listEditor({
   key:'videos',listSel:'#video-list',editorSel:'#video-editor',newBtn:'#video-new',
-  noun:'Video',newTitle:'NEW VIDEO',editTitle:'EDIT VIDEO',
-  blank:function(){return{url:'',title:'',meta:'',duration:''}},
-  rowHtml:function(v){var id=ytId(v.url);return (id?'<img src="https://i.ytimg.com/vi/'+id+'/default.jpg" style="width:60px;height:44px;object-fit:cover;border-radius:8px;border:1.5px solid var(--ink)" alt="">':'<span class="pill">VIDEO</span>')+'<div class="t"><b>'+esc(v.title||'(untitled)')+'</b><span>'+esc(v.duration||'')+'</span></div>'},
+  noun:'Moment',newTitle:'ADD AN OUT-IN-THE-WORLD MOMENT',editTitle:'EDIT THIS MOMENT',pro:true,countSel:'#video-count',countOne:'moment',countMany:'moments',editorHint:'Paste the original post, give it a strong caption, and add a thumbnail when the platform cannot provide one.',
+  blank:function(){return{url:'',title:'',meta:'',duration:'',image:''}},
+  rowHtml:function(v,i){var id=ytId(v.url),thumb=v.image||id&&('https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'),platform=platformName(v.url);return '<div class="content-preview">'+(i===0?'<span class="featured-flag">FEATURED</span>':'')+(thumb?'<img src="'+esc(thumb)+'" alt="">':'<div class="platform-mark">'+platform+'</div>')+'</div><div class="content-card-body"><div class="card-meta"><span>'+platform+'</span><span>'+esc(v.duration||'')+'</span></div><h3>'+esc(v.title||'(untitled)')+'</h3><p>'+esc(v.meta||'No supporting detail yet.')+'</p></div>'},
   formHtml:function(v){return ''+
-    '<div class="field"><label>Social or video link</label><input type="url" id="f-url" value="'+esc(v.url)+'" placeholder="https://www.instagram.com/…"></div>'+
-    '<div class="field"><label>Title shown on the site</label><input type="text" id="f-title" value="'+esc(v.title)+'"></div>'+
-    '<div class="row2">'+
-    '<div class="field"><label>Detail line</label><input type="text" id="f-meta" value="'+esc(v.meta||'')+'"></div>'+
-    '<div class="field"><label>Duration (e.g. 2:45)</label><input type="text" id="f-dur" value="'+esc(v.duration||'')+'"></div></div>'+
-    '<p class="note">The first video in the list is featured large on the site — use the ↑ arrows to reorder.</p>'},
-  collect:function(box){
+    '<div class="form-section"><div class="form-section-title">1 · Link the original</div><div class="field"><label>Instagram, YouTube, or web link</label><input type="url" id="f-url" value="'+esc(v.url)+'" placeholder="https://www.instagram.com/…"><p class="note" id="platform-note" style="margin-top:6px">Platform: '+platformName(v.url)+'</p></div></div>'+
+    '<div class="form-section"><div class="form-section-title">2 · Describe the moment</div><div class="field"><label>Headline shown on the site</label><input type="text" id="f-title" value="'+esc(v.title)+'" placeholder="A short, specific headline"></div><div class="field"><label>Supporting detail</label><input type="text" id="f-meta" value="'+esc(v.meta||'')+'" placeholder="Who, where, or why it matters"></div></div>'+
+    '<div class="form-section"><div class="form-section-title">3 · Choose a thumbnail</div><div class="image-picker"><div class="image-preview" id="f-image-preview">'+(v.image?'<img src="'+esc(v.image)+'" alt="">':ytId(v.url)?'<img src="https://i.ytimg.com/vi/'+ytId(v.url)+'/hqdefault.jpg" alt="">':'Add an image for social posts')+'</div><div><input type="file" id="f-image" accept="image/*"><p class="note" id="f-image-note">YouTube thumbnails appear automatically. For Instagram or other platforms, upload a landscape image or video still.</p></div></div></div>'+
+    '<details class="advanced"><summary>Optional video duration</summary><div class="field" style="margin-top:14px"><label>Duration</label><input type="text" id="f-dur" value="'+esc(v.duration||'')+'" placeholder="2:45"></div></details><p class="note">The first moment in the library is featured large. Use the arrows on the cards to choose the featured item.</p>'},
+  afterForm:function(box,item){
+    var url=box.querySelector('#f-url');url.addEventListener('input',function(){box.querySelector('#platform-note').textContent='Platform: '+platformName(url.value);var id=ytId(url.value);if(id&&!item.image)box.querySelector('#f-image-preview').innerHTML='<img src="https://i.ytimg.com/vi/'+id+'/hqdefault.jpg" alt="">'});
+    box.querySelector('#f-image').addEventListener('change',function(){var f=this.files[0];if(!f)return;uploadImage(f,function(path){item.image=path;box.querySelector('#f-image-note').textContent='Custom thumbnail uploaded and ready to publish.';box.querySelector('#f-image-preview').innerHTML='<img src="'+esc(path)+'" alt="">'})});
+  },
+  collect:function(box,item){
     var u=box.querySelector('#f-url').value.trim();
     var t=box.querySelector('#f-title').value.trim();
-    if(!t)return 'Give the video a title first.';
-    if(u&&!/^https?:/.test(u))return 'That content link doesn\'t look right.';
-    return{url:u,title:t,meta:box.querySelector('#f-meta').value.trim(),duration:box.querySelector('#f-dur').value.trim()};
+    if(!t)return 'Give the moment a headline first.';
+    if(!/^https?:/.test(u))return 'Add the complete link to the original post.';
+    return{url:u,title:t,meta:box.querySelector('#f-meta').value.trim(),duration:box.querySelector('#f-dur').value.trim(),image:item.image||''};
   }
 });
 function renderVideoList(){videoEd.renderList()}
