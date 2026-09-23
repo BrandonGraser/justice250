@@ -108,7 +108,18 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
 details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:17px}details.advanced summary{cursor:pointer;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase}details.advanced[open] summary{margin-bottom:14px}
 .image-picker{display:grid;grid-template-columns:150px 1fr;gap:15px;align-items:center}.image-preview{height:98px;border:2px dashed var(--line);border-radius:12px;overflow:hidden;background:#f1f3f4;display:grid;place-items:center;font-size:11px;color:var(--ink-soft)}.image-preview img{width:100%;height:100%;object-fit:cover}
 .empty-library{grid-column:1/-1;padding:38px;text-align:center;border:2px dashed var(--line);border-radius:16px;color:var(--ink-soft)}
+.inline-help{display:flex;align-items:center;gap:9px;margin:0 0 18px;font-size:12px;color:var(--ink-soft)}.inline-help:before{content:'✎';display:grid;place-items:center;width:27px;height:27px;border:2px solid var(--ink);border-radius:50%;background:var(--mustard);color:var(--ink);font-weight:700}
+.site-mimic{border:2px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:0 4px 0 var(--ink);background:#fff}
+.mimic-section{padding:38px 42px;position:relative}.mimic-section+.mimic-section{border-top:2px solid var(--ink)}.mimic-orange{background:#f39245}.mimic-blue{background:#91d5f5}.mimic-mustard{background:#f6c85f}.mimic-white{background:#fff}.mimic-dark{background:var(--ink);color:#fff}
+.mimic-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.65;margin-bottom:13px}.mimic-title{font-size:clamp(24px,4vw,42px);line-height:.98;letter-spacing:.015em;text-transform:uppercase;margin-bottom:17px}.mimic-copy{font-family:var(--mono);font-size:13px;line-height:1.65;max-width:76ch}.mimic-copy+.mimic-copy{margin-top:12px}
+.direct-edit{border-radius:6px;outline:2px dashed transparent;outline-offset:5px;transition:.15s;cursor:text}.direct-edit:hover{outline-color:rgba(67,67,67,.35)}.direct-edit:focus{outline:3px solid var(--sky);background:rgba(255,255,255,.45)}.mimic-dark .direct-edit:focus{color:var(--ink)}
+.edit-badge{position:absolute;right:18px;top:16px;background:rgba(255,255,255,.78);color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:4px 9px;font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+.mimic-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.mimic-card{border:2px solid var(--ink);border-radius:14px;background:#fff;padding:17px;color:var(--ink)}.mimic-card h4{font-size:14px;margin-bottom:8px}.mimic-card p{font-size:11px;line-height:1.5}
+.mimic-about{display:grid;grid-template-columns:1fr 1fr;min-height:390px}.mimic-photo{position:relative;background:#d9dfe2;min-height:330px;overflow:hidden}.mimic-photo img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}.mimic-photo-empty{height:100%;display:grid;place-items:center;text-align:center;padding:30px;font-weight:700;letter-spacing:.08em;color:var(--ink-soft)}
+.photo-actions{position:absolute;z-index:2;left:18px;bottom:18px;display:flex;gap:8px;flex-wrap:wrap}.photo-actions .btn{background:#fff}.mimic-about-copy{padding:42px;background:var(--mustard)}
+.mimic-divider{height:1.5px;background:rgba(67,67,67,.22);margin:22px 0}.mimic-small{font-size:11px;letter-spacing:.05em;text-transform:uppercase}
 @media (max-width:760px){.manager-head{align-items:stretch;flex-direction:column}.manager-actions{justify-content:space-between}.content-library{grid-template-columns:1fr}.image-picker,.choice-row{grid-template-columns:1fr}}
+@media (max-width:700px){.mimic-section{padding:32px 24px}.mimic-cards,.mimic-about{grid-template-columns:1fr}.mimic-photo{min-height:300px}}
 </style>
 </head>
 <body>
@@ -143,26 +154,15 @@ details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 
   </nav>
   <main>
     <section class="panel active" id="panel-text">
-      <h2>Site text</h2>
-      <p class="hint">Edit any wording on the site. Changes go live when you hit PUBLISH CHANGES.</p>
-      <div id="text-groups"></div>
+      <h2>Edit site text</h2>
+      <p class="inline-help">Click directly on any highlighted piece of copy below and type. Your edits are saved when you publish.</p>
+      <div class="site-mimic" id="text-groups"></div>
     </section>
 
     <section class="panel" id="panel-images">
-      <h2>Images</h2>
-      <p class="hint">Upload a replacement photo — it's resized automatically and goes live on publish.</p>
-      <div class="group">
-        <h3>About section photo</h3>
-        <div class="img-slot">
-          <img id="about-photo-preview" alt="About section photo preview">
-          <div>
-            <input type="file" id="about-photo-file" accept="image/*">
-            <p class="note">Shown next to the mustard About panel. Tip: black &amp; white photos match the brand best.</p>
-            <button class="btn small" id="about-photo-reset" type="button">RESET TO ORIGINAL</button>
-          </div>
-        </div>
-      </div>
-      <p class="hint">Blog post images are uploaded inside each post's editor (Blog Posts tab).</p>
+      <h2>Edit site images</h2>
+      <p class="inline-help">Use the controls directly on the image where it appears. Story images remain inside each Campaign Update.</p>
+      <div class="site-mimic"><div class="mimic-about"><div class="mimic-photo"><div class="mimic-photo-empty" id="about-photo-empty">ABOUT SECTION PHOTO</div><img id="about-photo-preview" alt="About section photo preview"><div class="photo-actions"><label class="btn small" for="about-photo-file">REPLACE PHOTO</label><input type="file" id="about-photo-file" accept="image/*" hidden><button class="btn small" id="about-photo-reset" type="button">USE ORIGINAL</button></div></div><div class="mimic-about-copy"><div class="mimic-label">Live placement preview</div><h3 class="mimic-title" id="image-about-title">ABOUT JUSTICE &amp; THE NEXT 250</h3><p class="mimic-copy" id="image-about-body"></p></div></div></div>
     </section>
 
     <section class="panel" id="panel-blog">
@@ -269,30 +269,32 @@ function uploadImage(file,cb){
 function renderAll(){renderText();renderImages();renderBlogList();renderEventList();renderVideoList()}
 
 function renderText(){
-  var host=$('#text-groups'); host.innerHTML='';
-  Object.keys(TEXT_LABELS).forEach(function(groupName){
-    var g=document.createElement('div'); g.className='group';
-    g.innerHTML='<h3>'+esc(groupName)+'</h3>';
-    Object.keys(TEXT_LABELS[groupName]).forEach(function(key){
-      var val=content.text[key]||'';
-      var f=document.createElement('div'); f.className='field';
-      var long=val.length>90;
-      f.innerHTML='<label>'+esc(TEXT_LABELS[groupName][key])+'</label>'+
-        (long?'<textarea data-key="'+key+'">'+esc(val)+'</textarea>':'<input type="text" data-key="'+key+'" value="'+esc(val)+'">');
-      g.appendChild(f);
-    });
-    host.appendChild(g);
-  });
+  var host=$('#text-groups');
+  function ed(key,tag,cls){return '<'+tag+' class="direct-edit '+(cls||'')+'" contenteditable="true" spellcheck="true" data-key="'+key+'" title="'+esc(TEXT_LABELS[Object.keys(TEXT_LABELS).find(function(g){return TEXT_LABELS[g][key]})][key])+'">'+esc(content.text[key]||'')+'</'+tag+'>'}
+  host.innerHTML=''+
+    '<section class="mimic-section mimic-dark"><span class="edit-badge">Click text to edit</span><div class="mimic-label">Hero</div>'+ed('hero_kicker','div','mimic-small')+ed('hero_tagline','h3','mimic-title')+'</section>'+
+    '<section class="mimic-section mimic-mustard"><span class="edit-badge">About</span>'+ed('about_title','h3','mimic-title')+ed('about_body','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-blue"><span class="edit-badge">Why now</span>'+ed('why_title','h3','mimic-title')+ed('why_p1','p','mimic-copy')+ed('why_p2','p','mimic-copy')+'<div class="mimic-cards"><div class="mimic-card">'+ed('why_know1','p','')+'</div><div class="mimic-card">'+ed('why_know2','p','')+'</div><div class="mimic-card">'+ed('why_know3','p','')+'</div></div>'+ed('why_p3','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-orange"><span class="edit-badge">Campaign updates</span>'+ed('blog_title','h3','mimic-title')+ed('blog_lede','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-mustard"><span class="edit-badge">Join the campaign</span>'+ed('involved_title','h3','mimic-title')+ed('involved_p1','p','mimic-copy')+ed('involved_p2','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-white"><span class="edit-badge">Host an event</span>'+ed('host_title','h3','mimic-title')+ed('host_intro','p','mimic-copy')+'<div class="mimic-cards"><div class="mimic-card">'+ed('host_card1_title','h4','')+ed('host_card1_body','p','')+'</div><div class="mimic-card">'+ed('host_card2_title','h4','')+ed('host_card2_body','p','')+'</div><div class="mimic-card">'+ed('host_card3_title','h4','')+ed('host_card3_body','p','')+'</div></div></section>'+
+    '<section class="mimic-section mimic-blue"><span class="edit-badge">Film screening</span>'+ed('feature_date','div','mimic-small')+ed('feature_title','h3','mimic-title')+ed('feature_body','p','mimic-copy')+ed('feature_btn','div','mimic-small')+'</section>'+
+    '<section class="mimic-section mimic-mustard"><span class="edit-badge">Events</span>'+ed('events_title','h3','mimic-title')+ed('events_lede','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-blue"><span class="edit-badge">Out in the world</span>'+ed('media_title','h3','mimic-title')+ed('media_lede','p','mimic-copy')+'</section>'+
+    '<section class="mimic-section mimic-dark"><span class="edit-badge">Footer</span>'+ed('newsletter_title','h3','mimic-title')+ed('newsletter_body','p','mimic-copy')+'<div class="mimic-divider"></div>'+ed('footer_tagline','div','mimic-small')+ed('contact_email','div','mimic-small')+'</section>';
   host.addEventListener('input',function(e){
     var k=e.target.dataset.key; if(!k)return;
-    content.text[k]=e.target.value; setDirty(true);
+    content.text[k]=e.target.innerText.replace(/\n{3,}/g,'\n\n').trim(); setDirty(true);
   });
+  host.addEventListener('paste',function(e){if(!e.target.dataset.key)return;e.preventDefault();document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text'))});
 }
 
 function renderImages(){
   var img=$('#about-photo-preview');
-  if(content.images.about_photo){img.src=content.images.about_photo;img.style.display=''}
-  else{img.removeAttribute('src');img.style.display='none'}
+  var empty=$('#about-photo-empty');
+  $('#image-about-title').textContent=content.text.about_title||'';$('#image-about-body').textContent=content.text.about_body||'';
+  if(content.images.about_photo){img.src=content.images.about_photo;img.style.display='';empty.style.display='none'}
+  else{img.removeAttribute('src');img.style.display='none';empty.style.display='grid'}
 }
 
 $('#about-photo-file').addEventListener('change',function(){
