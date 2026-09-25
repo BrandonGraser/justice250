@@ -195,6 +195,7 @@ var password=sessionStorage.getItem('jn250_pw')||'';
 var content=null, dirty=false;
 
 var TEXT_LABELS={
+  'Navigation':{updates_nav:'Campaign updates navigation label'},
   'Hero':{hero_kicker:'Small pill above the logo',hero_tagline:'Tagline under the logo'},
   'About':{about_title:'Section title',about_body:'About paragraph'},
   'Why now':{why_title:'Section title',why_p1:'Paragraph 1',why_p2:'Paragraph 2',why_p3:'Closing paragraph',why_know1:'Point 1',why_know2:'Point 2',why_know3:'Point 3'},
@@ -235,9 +236,10 @@ function loadContent(){
       return fetch('content.json?v='+Date.now(),{cache:'no-store'})
         .then(function(r){if(!r.ok)throw new Error('Could not load site content');return r.json()});
     })
-    .then(function(c){content=c;$('#status').textContent='';renderAll()});
+    .then(function(c){content=c;if(content.text.updates_nav==null)content.text.updates_nav='THE NEXT 250 TIMES';$('#status').textContent='';renderAll()});
 }
 function publish(){
+  if(location.hostname.endsWith('github.io')){toast('Publishing is unavailable on the GitHub Pages copy. Open the editor on the production Vercel site.',true);return}
   var btn=$('#btn-publish'); btn.disabled=true; $('#status').textContent='Publishing…';
   api('save',{content:content}).then(function(){
     setDirty(false); btn.disabled=false; $('#status').textContent='';
@@ -272,6 +274,7 @@ function renderText(){
   var host=$('#text-groups');
   function ed(key,tag,cls){return '<'+tag+' class="direct-edit '+(cls||'')+'" contenteditable="true" spellcheck="true" data-key="'+key+'" title="'+esc(TEXT_LABELS[Object.keys(TEXT_LABELS).find(function(g){return TEXT_LABELS[g][key]})][key])+'">'+esc(content.text[key]||'')+'</'+tag+'>'}
   host.innerHTML=''+
+    '<section class="mimic-section mimic-white"><span class="edit-badge">Navigation</span><div class="mimic-label">Header button label</div>'+ed('updates_nav','h3','mimic-title')+'</section>'+
     '<section class="mimic-section mimic-dark"><span class="edit-badge">Click text to edit</span><div class="mimic-label">Hero</div>'+ed('hero_kicker','div','mimic-small')+ed('hero_tagline','h3','mimic-title')+'</section>'+
     '<section class="mimic-section mimic-mustard"><span class="edit-badge">About</span>'+ed('about_title','h3','mimic-title')+ed('about_body','p','mimic-copy')+'</section>'+
     '<section class="mimic-section mimic-blue"><span class="edit-badge">Why now</span>'+ed('why_title','h3','mimic-title')+ed('why_p1','p','mimic-copy')+ed('why_p2','p','mimic-copy')+'<div class="mimic-cards"><div class="mimic-card">'+ed('why_know1','p','')+'</div><div class="mimic-card">'+ed('why_know2','p','')+'</div><div class="mimic-card">'+ed('why_know3','p','')+'</div></div>'+ed('why_p3','p','mimic-copy')+'</section>'+
@@ -402,7 +405,7 @@ function eventIsPast(ev){
 var eventEd=listEditor({
   key:'events',listSel:'#event-list',editorSel:'#event-editor',newBtn:'#event-new',
   noun:'Event',newTitle:'NEW EVENT',editTitle:'EDIT EVENT',
-  blank:function(){return{month:'DATE',day:'TBD',title:'',meta:'',link:'',label:'COMING SOON',dates:[]}},
+  blank:function(){return{month:'DATE',day:'TBD',title:'',meta:'',link:'',label:'VIEW EVENT',dates:[]}},
   rowHtml:function(ev){var past=eventIsPast(ev);return '<span class="pill'+(past?'':' news')+'">'+esc(ev.month)+' '+esc(ev.day)+'</span><div class="t"><b>'+esc(ev.title||'(untitled)')+'</b><span>'+(past?'Past event':ev.dates&&ev.dates.length?'Upcoming':'Date TBD')+'</span></div>'},
   formHtml:function(ev){return ''+
     '<div class="row3">'+
@@ -431,7 +434,7 @@ var eventEd=listEditor({
     if(dates.length&&day==='TBD'){month=MONTHS[Number(dates[0].slice(5,7))-1];day=String(Number(dates[0].slice(8,10)))}
     return{month:month,day:day,dates:dates,
       title:t,meta:box.querySelector('#f-meta').value.trim(),link:box.querySelector('#f-link').value.trim(),
-      label:box.querySelector('#f-label').value.trim()||'COMING SOON'};
+      label:box.querySelector('#f-label').value.trim()||'VIEW EVENT'};
   }
 });
 function renderEventList(){eventEd.renderList()}

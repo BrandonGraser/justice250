@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       access: 'public',
       addRandomSuffix: false,
       contentType: 'application/json',
-      cacheControlMaxAge: 0,
+      cacheControlMaxAge: 60,
       allowOverwrite: true,
     });
     return res.status(200).json({ ok: true });

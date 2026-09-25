@@ -392,6 +392,7 @@ h2.sec-title{margin-left:auto;margin-right:auto}
   background:var(--mustard);color:#434343;box-shadow:var(--shadow);white-space:nowrap;text-transform:uppercase;
 }
 .btn-mini:hover{background:var(--mustard-2)}
+.event-status{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ink-soft);white-space:nowrap;text-transform:uppercase;padding:8px 2px}
 .evt.past{opacity:.75}
 .evt.past .when .m{color:var(--ink-soft)}
 .evt.past .btn-mini{background:#ddd}
@@ -555,7 +556,7 @@ main{display:flex;flex-direction:column}
       <a href="#about">ABOUT</a>
       <a href="#why">WHY NOW</a>
       <a href="#events">EVENTS</a>
-      <a href="#updates">UPDATES</a>
+      <a class="updates-nav-label" href="#updates">THE NEXT 250 TIMES</a>
     </nav>
     <button class="menu-btn" aria-expanded="false" aria-controls="nav-links">MENU</button>
     <a class="nav-cta" href="#involved">JOIN THE CAMPAIGN</a>
@@ -821,22 +822,22 @@ main{display:flex;flex-direction:column}
         <div class="evt reveal">
           <div class="when"><div class="m">AUG</div><div class="d">18</div></div>
           <div><h4>PEOPLE'S AGENDA LEADERSHIP CONFERENCE — MONTGOMERY, AL</h4><div class="meta">Faith in Action Alabama · Film screening and facilitated community conversation</div></div>
-          <span class="btn-mini">COMING SOON</span>
+          <span class="event-status">DETAILS COMING SOON</span>
         </div>
         <div class="evt reveal">
           <div class="when"><div class="m">AUG</div><div class="d range">20/22</div></div>
           <div><h4>CRIME &amp; PUNISHMENT SCREENINGS — MISSISSIPPI</h4><div class="meta">Clergy for Prison Reform · Virtual screening followed by an in-person gathering in Columbia</div></div>
-          <span class="btn-mini">COMING SOON</span>
+          <span class="event-status">DETAILS COMING SOON</span>
         </div>
         <div class="evt reveal">
           <div class="when"><div class="m">AUG</div><div class="d range">21–23</div></div>
           <div><h4>REGIONAL JUSTICE CONVENING — CHICAGO, IL</h4><div class="meta">Formerly Incarcerated Convicted People &amp; Families Movement · Regional gathering</div></div>
-          <span class="btn-mini">COMING SOON</span>
+          <span class="event-status">DETAILS COMING SOON</span>
         </div>
         <div class="evt reveal">
           <div class="when"><div class="m">AUG</div><div class="d">29</div></div>
           <div><h4>RACE UNWRAPPED: ART AS ACTIVISM — LOUISVILLE, KY</h4><div class="meta">Louisville Public Media · Community storytelling and visions for the next 250</div></div>
-          <span class="btn-mini">COMING SOON</span>
+          <span class="event-status">DETAILS COMING SOON</span>
         </div>
       </div>
       <div class="event-scroll-controls" aria-label="Scroll campaign events">
@@ -925,7 +926,7 @@ main{display:flex;flex-direction:column}
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#why">Why now</a></li>
-          <li><a href="#updates">Updates</a></li>
+          <li><a class="updates-nav-label" href="#updates">The Next 250 Times</a></li>
           <li><a href="#involved">Join the campaign</a></li>
           <li><a href="#host">Host an event</a></li>
           <li><a href="#events">Events</a></li>
@@ -1011,6 +1012,7 @@ main{display:flex;flex-direction:column}
 // ---------- CMS loader: applies content.json when hosted alongside it ----------
 (function(){
   var TEXT_MAP = {
+    updates_nav: '.updates-nav-label',
     hero_kicker: '.hero-kicker',
     hero_tagline: '.hero-tag',
     about_title: '.as-panel .sec-title',
@@ -1140,11 +1142,12 @@ main{display:flex;flex-direction:column}
         var badgeStart='2026-'+String(months[ev.month]||0).padStart(2,'0')+'-'+String(parseInt(ev.day,10)||0).padStart(2,'0');
         if(badgeStart<today){badgeMonth=monthNames[Number(item.next.slice(5,7))-1];badgeDay=String(Number(item.next.slice(8,10)))}
       }
-      var label=item.past?'PAST EVENT':ev.label==='PAST EVENT'?'COMING SOON':ev.label||'COMING SOON';
+      var label=item.past?'PAST EVENT':ev.label==='PAST EVENT'?'VIEW EVENT':ev.label||'VIEW EVENT';
+      if(ev.link&&label==='COMING SOON')label='VIEW EVENT';
       return divider+'<div class="evt'+(item.past?' past':'')+'" data-event-status="'+(item.past?'past':undated?'undated':'upcoming')+'">'
         +'<div class="when"><div class="m">'+esc(badgeMonth)+'</div><div class="d'+(/[\/–—-]/.test(String(badgeDay))?' range':'')+'">'+esc(badgeDay)+'</div></div>'
         +'<div><h4>'+esc(ev.title)+'</h4><div class="meta">'+esc(ev.meta||'')+'</div></div>'
-        +(ev.link&&!item.past?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(label)+'</a>':'<span class="btn-mini">'+esc(label)+'</span>')+'</div>';
+        +(ev.link&&!item.past?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(label)+'</a>':'<span class="event-status">'+esc(item.past?'PAST EVENT':'DETAILS COMING SOON')+'</span>')+'</div>';
     }).join('');
     if(scrollToNext!==false){
       var first=list.querySelector('[data-event-status="upcoming"]')||list.querySelector('.event-date-divider');
@@ -1184,10 +1187,10 @@ main{display:flex;flex-direction:column}
   function apply(c){
     if(c.text) Object.keys(TEXT_MAP).forEach(function(k){
       if(c.text[k]==null) return;
-      var el=document.querySelector(TEXT_MAP[k]); if(el){
+      var els=document.querySelectorAll(TEXT_MAP[k]); els.forEach(function(el){
         el.textContent=c.text[k];
         if(k==='contact_email')el.href='mailto:'+c.text[k];
-      }
+      });
     });
     if(c.images&&c.images.about_photo){
       var img=document.querySelector('.as-photo img'); if(img) img.src=c.images.about_photo;
