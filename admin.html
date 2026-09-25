@@ -173,7 +173,7 @@ details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 
 
     <section class="panel" id="panel-events">
       <h2>Events — "Show up for the next 250"</h2>
-      <p class="hint">These rows appear in the Events section. Add confirmed dates in YYYY-MM-DD format; the site automatically marks events as past and opens the list at the next upcoming event.</p>
+      <p class="hint">These rows appear in the Events section. Add confirmed dates in YYYY-MM-DD format; the list automatically sorts upcoming events by date, keeps TBD events together, and moves past events to the bottom.</p>
       <button class="btn primary" id="event-new" type="button">＋ NEW EVENT</button>
       <div id="event-editor"></div>
       <div id="event-list" style="margin-top:18px"></div>
@@ -319,8 +319,8 @@ function listEditor(cfg){
     if(!content[cfg.key].length){host.innerHTML='<div class="empty-library">Nothing here yet. Use the add button above to create the first '+cfg.noun.toLowerCase()+'.</div>';return}
     content[cfg.key].forEach(function(item,i){
       var row=document.createElement('div'); row.className='item-row';
-      var controls='<button class="btn small" data-a="up" '+(i===0?'disabled':'')+' type="button" title="Move earlier">↑</button>'+
-        '<button class="btn small" data-a="down" '+(i===content[cfg.key].length-1?'disabled':'')+' type="button" title="Move later">↓</button>'+
+      var controls=(cfg.reorder===false?'':'<button class="btn small" data-a="up" '+(i===0?'disabled':'')+' type="button" title="Move earlier">↑</button>'+
+        '<button class="btn small" data-a="down" '+(i===content[cfg.key].length-1?'disabled':'')+' type="button" title="Move later">↓</button>')+
         '<button class="btn small'+(cfg.pro?' edit-btn':'')+'" data-a="edit" type="button">EDIT</button>'+
         '<button class="btn small danger" data-a="del" type="button">DELETE</button>';
       row.innerHTML=cfg.rowHtml(item,i)+(cfg.pro?'<div class="card-tools">'+controls+'</div>':controls);
@@ -402,9 +402,24 @@ function eventIsPast(ev){
   var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   return ev.dates.every(function(date){return date<today});
 }
+function sortEventsForEditor(events){
+  var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  return events.sort(function(a,b){
+    function info(ev){
+      var dates=(Array.isArray(ev.dates)?ev.dates:[]).filter(function(d){return /^\d{4}-\d{2}-\d{2}$/.test(d)}).sort();
+      var next=dates.find(function(d){return d>=today});
+      var past=dates.length?!next:!!ev.past;
+      return{group:past?2:next?0:1,date:next||(dates.length?dates[dates.length-1]:'9999-12-31')};
+    }
+    var ai=info(a),bi=info(b);
+    if(ai.group!==bi.group)return ai.group-bi.group;
+    if(ai.group===2)return bi.date.localeCompare(ai.date);
+    return ai.date.localeCompare(bi.date)||String(a.title||'').localeCompare(String(b.title||''));
+  });
+}
 var eventEd=listEditor({
   key:'events',listSel:'#event-list',editorSel:'#event-editor',newBtn:'#event-new',
-  noun:'Event',newTitle:'NEW EVENT',editTitle:'EDIT EVENT',
+  noun:'Event',newTitle:'NEW EVENT',editTitle:'EDIT EVENT',reorder:false,
   blank:function(){return{month:'DATE',day:'TBD',title:'',meta:'',link:'',label:'VIEW EVENT',dates:[]}},
   rowHtml:function(ev){var past=eventIsPast(ev);return '<span class="pill'+(past?'':' news')+'">'+esc(ev.month)+' '+esc(ev.day)+'</span><div class="t"><b>'+esc(ev.title||'(untitled)')+'</b><span>'+(past?'Past event':ev.dates&&ev.dates.length?'Upcoming':'Date TBD')+'</span></div>'},
   formHtml:function(ev){return ''+
@@ -437,7 +452,7 @@ var eventEd=listEditor({
       label:box.querySelector('#f-label').value.trim()||'VIEW EVENT'};
   }
 });
-function renderEventList(){eventEd.renderList()}
+function renderEventList(){sortEventsForEditor(content.events);eventEd.renderList()}
 
 /* videos */
 function ytId(url){var m=String(url||'').match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/);return m?m[1]:null}
