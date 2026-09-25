@@ -1089,6 +1089,11 @@ main{display:flex;flex-direction:column}
       showAll.onclick=function(){renderBlog(posts,true)};
     }
   }
+  function eventHref(value){
+    var link=String(value||'').trim();
+    if(!link||link.charAt(0)==='#'||link.charAt(0)==='/')return link;
+    return /^https?:\/\//i.test(link)?link:'https://'+link;
+  }
   function openPost(p){
     var old=document.getElementById('post-modal'); if(old) old.remove();
     var cat=CAT[p.category]||CAT.news;
@@ -1147,7 +1152,7 @@ main{display:flex;flex-direction:column}
       return divider+'<div class="evt'+(item.past?' past':'')+'" data-event-status="'+(item.past?'past':undated?'undated':'upcoming')+'">'
         +'<div class="when"><div class="m">'+esc(badgeMonth)+'</div><div class="d'+(/[\/–—-]/.test(String(badgeDay))?' range':'')+'">'+esc(badgeDay)+'</div></div>'
         +'<div><h4>'+esc(ev.title)+'</h4><div class="meta">'+esc(ev.meta||'')+'</div></div>'
-        +(ev.link&&!item.past?'<a class="btn-mini" href="'+esc(ev.link)+'"'+(/^https?:/.test(ev.link)?' target="_blank" rel="noopener"':'')+'>'+esc(label)+'</a>':'<span class="event-status">'+esc(item.past?'PAST EVENT':'DETAILS COMING SOON')+'</span>')+'</div>';
+        +(ev.link&&!item.past?'<a class="btn-mini" href="'+esc(eventHref(ev.link))+'"'+(/^https?:/i.test(eventHref(ev.link))?' target="_blank" rel="noopener"':'')+'>'+esc(label)+'</a>':'<span class="event-status">'+esc(item.past?'PAST EVENT':'DETAILS COMING SOON')+'</span>')+'</div>';
     }).join('');
     if(scrollToNext!==false){
       var first=list.querySelector('[data-event-status="upcoming"]')||list.querySelector('.event-date-divider');

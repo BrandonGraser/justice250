@@ -402,6 +402,13 @@ function eventIsPast(ev){
   var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   return ev.dates.every(function(date){return date<today});
 }
+function normalizeEventLink(value){
+  var link=String(value||'').trim();
+  if(!link||link.charAt(0)==='#'||link.charAt(0)==='/')return link;
+  if(/^https?:\/\//i.test(link))return link;
+  if(/^www\./i.test(link)||/^[\w.-]+\.[a-z]{2,}(?:[/?#].*)?$/i.test(link))return'https://'+link;
+  return link;
+}
 function sortEventsForEditor(events){
   var now=new Date(),today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
   return events.sort(function(a,b){
@@ -447,8 +454,10 @@ var eventEd=listEditor({
     var month=box.querySelector('#f-month').value,day=box.querySelector('#f-day').value.trim()||'TBD';
     if(!dates.length&&day!=='TBD')return 'Add a confirmed date, or change the badge day to TBD.';
     if(dates.length&&day==='TBD'){month=MONTHS[Number(dates[0].slice(5,7))-1];day=String(Number(dates[0].slice(8,10)))}
+    var link=normalizeEventLink(box.querySelector('#f-link').value);
+    if(link&&!/^https?:\/\//i.test(link)&&link.charAt(0)!=='#'&&link.charAt(0)!=='/')return 'Enter a complete web address, such as example.org/event.';
     return{month:month,day:day,dates:dates,
-      title:t,meta:box.querySelector('#f-meta').value.trim(),link:box.querySelector('#f-link').value.trim(),
+      title:t,meta:box.querySelector('#f-meta').value.trim(),link:link,
       label:box.querySelector('#f-label').value.trim()||'VIEW EVENT'};
   }
 });
