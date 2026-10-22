@@ -107,6 +107,7 @@ input:focus,textarea:focus,select:focus{outline:3px solid var(--sky3)}
 .choice-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{border:2px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;display:flex;gap:9px;align-items:flex-start;background:#fff}.choice:has(input:checked){border-color:var(--sky);background:#eef8ff}.choice input{margin-top:3px}.choice b{display:block;font-size:12px}.choice span{display:block;font-size:10.5px;color:var(--ink-soft);margin-top:2px}
 details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:17px}details.advanced summary{cursor:pointer;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase}details.advanced[open] summary{margin-bottom:14px}
 .image-picker{display:grid;grid-template-columns:150px 1fr;gap:15px;align-items:center}.image-preview{height:98px;border:2px dashed var(--line);border-radius:12px;overflow:hidden;background:#f1f3f4;display:grid;place-items:center;font-size:11px;color:var(--ink-soft)}.image-preview img{width:100%;height:100%;object-fit:cover}
+.metadata-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}.metadata-preview{position:sticky;top:76px}.search-preview,.social-preview{background:#fff;border:2px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:0 3px 0 var(--ink)}.search-preview{padding:18px}.preview-url{font-size:11px;color:#356b45;margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.preview-title{font:500 18px Arial,sans-serif;color:#1a0dab;margin-bottom:5px;line-height:1.25}.preview-description{font:13px/1.45 Arial,sans-serif;color:#4d5156}.social-preview{margin-top:18px}.social-image-preview{aspect-ratio:1.91/1;background:var(--sky3);display:grid;place-items:center;border-bottom:2px solid var(--ink);overflow:hidden;color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.08em}.social-image-preview img{width:100%;height:100%;object-fit:cover}.social-preview-copy{padding:14px}.social-preview-copy b{display:block;font-size:13px;line-height:1.35;margin:3px 0}.social-preview-copy p{font-size:11px;color:var(--ink-soft);line-height:1.4}.char-count{float:right;font-size:10px;font-weight:400;letter-spacing:0;text-transform:none}.metadata-upload{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.metadata-upload input[type=url]{flex:1;min-width:220px}@media(max-width:850px){.metadata-grid{grid-template-columns:1fr}.metadata-preview{position:static}}
 .empty-library{grid-column:1/-1;padding:38px;text-align:center;border:2px dashed var(--line);border-radius:16px;color:var(--ink-soft)}
 .inline-help{display:flex;align-items:center;gap:9px;margin:0 0 18px;font-size:12px;color:var(--ink-soft)}.inline-help:before{content:'✎';display:grid;place-items:center;width:27px;height:27px;border:2px solid var(--ink);border-radius:50%;background:var(--mustard);color:var(--ink);font-weight:700}
 .site-mimic{border:2px solid var(--ink);border-radius:20px;overflow:hidden;box-shadow:0 4px 0 var(--ink);background:#fff}
@@ -151,6 +152,7 @@ details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 
     <button data-tab="blog" type="button">CAMPAIGN UPDATES</button>
     <button data-tab="events" type="button">EVENTS</button>
     <button data-tab="videos" type="button">OUT IN THE WORLD</button>
+    <button data-tab="metadata" type="button">SITE METADATA</button>
   </nav>
   <main>
     <section class="panel active" id="panel-text">
@@ -183,6 +185,28 @@ details.advanced{border:1.5px solid var(--line);border-radius:12px;padding:11px 
       <div class="manager-head"><div><h2>Justice &amp; The Next 250 Out in the World</h2><p class="hint">Build a growing gallery of campaign moments from Instagram, YouTube, and the web. The first item is the large featured story; everything else automatically fills the grid.</p></div><div class="manager-actions"><span class="count-chip" id="video-count">0 moments</span><button class="btn primary" id="video-new" type="button">＋ ADD MOMENT</button></div></div>
       <div id="video-editor"></div>
       <div id="video-list" class="content-library"></div>
+    </section>
+
+    <section class="panel" id="panel-metadata">
+      <h2>Site metadata</h2>
+      <p class="hint">Control how the site appears in browser tabs, search results, and social-media shares. Publishing these fields does not change any visible page copy.</p>
+      <div class="metadata-grid">
+        <div class="group">
+          <h3>Search &amp; browser</h3>
+          <div class="field"><label for="meta-title">Site title <span class="char-count" id="meta-title-count"></span></label><input type="text" id="meta-title" maxlength="120" placeholder="Justice &amp; The Next 250"></div>
+          <div class="field"><label for="meta-description">Meta description <span class="char-count" id="meta-description-count"></span></label><textarea id="meta-description" maxlength="320" placeholder="A short summary of the site."></textarea></div>
+          <h3>Social sharing</h3>
+          <div class="field"><label for="meta-social-title">Share title <span class="char-count" id="meta-social-title-count"></span></label><input type="text" id="meta-social-title" maxlength="120" placeholder="Defaults to the site title"></div>
+          <div class="field"><label for="meta-social-description">Share description <span class="char-count" id="meta-social-description-count"></span></label><textarea id="meta-social-description" maxlength="320" placeholder="Defaults to the meta description"></textarea></div>
+          <div class="field"><label for="meta-social-image">Share image</label><div class="metadata-upload"><input type="url" id="meta-social-image" placeholder="https://…"><label class="btn small" for="meta-social-image-file">UPLOAD IMAGE</label><input type="file" id="meta-social-image-file" accept="image/*" hidden></div><p class="note">Use a 1200 × 630 image for the best social preview.</p></div>
+        </div>
+        <aside class="metadata-preview">
+          <div class="mimic-label">Search preview</div>
+          <div class="search-preview"><div class="preview-url">justice250.vercel.app</div><div class="preview-title" id="meta-preview-title"></div><div class="preview-description" id="meta-preview-description"></div></div>
+          <div class="mimic-label" style="margin-top:24px">Social preview</div>
+          <div class="social-preview"><div class="social-image-preview" id="meta-preview-image">SHARE IMAGE PREVIEW</div><div class="social-preview-copy"><span class="note">JUSTICE250.VERCEL.APP</span><b id="meta-preview-social-title"></b><p id="meta-preview-social-description"></p></div></div>
+        </aside>
+      </div>
     </section>
   </main>
 </div>
@@ -228,6 +252,7 @@ function api(path,body){
 }
 function logout(){password='';sessionStorage.removeItem('jn250_pw');$('#app').style.display='none';$('#setup').style.display='block'}
 
+function metadataDefaults(){return{title:'Justice & The Next 250',description:'Justice & The Next 250 is a campaign of The Just Trust, bringing together advocates, culture-makers, policymakers, and community leaders to shape the future of justice and safety in America.',socialTitle:'Justice & The Next 250',socialDescription:"Building a future we're proud of.",socialImage:''}}
 function loadContent(){
   $('#status').textContent='Loading…';
   return fetch('/api/content?v='+Date.now(),{cache:'no-store'})
@@ -236,7 +261,7 @@ function loadContent(){
       return fetch('content.json?v='+Date.now(),{cache:'no-store'})
         .then(function(r){if(!r.ok)throw new Error('Could not load site content');return r.json()});
     })
-    .then(function(c){content=c;if(content.text.updates_nav==null)content.text.updates_nav='THE NEXT 250 TIMES';$('#status').textContent='';renderAll()});
+    .then(function(c){content=c;content.metadata=Object.assign(metadataDefaults(),content.metadata||{});if(content.text.updates_nav==null)content.text.updates_nav='THE NEXT 250 TIMES';$('#status').textContent='';renderAll()});
 }
 function publish(){
   if(location.hostname.endsWith('github.io')){toast('Publishing is unavailable on the GitHub Pages copy. Open the editor on the production Vercel site.',true);return}
@@ -268,7 +293,21 @@ function uploadImage(file,cb){
 }
 
 /* ---------- render ---------- */
-function renderAll(){renderText();renderImages();renderBlogList();renderEventList();renderVideoList()}
+function renderAll(){renderText();renderImages();renderBlogList();renderEventList();renderVideoList();renderMetadata()}
+
+function renderMetadata(){
+  var m=content.metadata=Object.assign(metadataDefaults(),content.metadata||{});
+  ['title','description','socialTitle','socialDescription','socialImage'].forEach(function(key){var el=$('#meta-'+key.replace(/[A-Z]/g,function(x){return'-'+x.toLowerCase()}));if(el)el.value=m[key]||''});
+  updateMetadataPreview();
+}
+function updateMetadataPreview(){
+  var m=content.metadata,title=m.title||'Untitled site',description=m.description||'Add a meta description to preview it here.';
+  $('#meta-preview-title').textContent=title;$('#meta-preview-description').textContent=description;
+  $('#meta-preview-social-title').textContent=m.socialTitle||title;$('#meta-preview-social-description').textContent=m.socialDescription||description;
+  $('#meta-title-count').textContent=(m.title||'').length+'/60 recommended';$('#meta-description-count').textContent=(m.description||'').length+'/160 recommended';
+  $('#meta-social-title-count').textContent=(m.socialTitle||'').length+'/60 recommended';$('#meta-social-description-count').textContent=(m.socialDescription||'').length+'/160 recommended';
+  $('#meta-preview-image').innerHTML=m.socialImage?'<img src="'+esc(m.socialImage)+'" alt="">':'SHARE IMAGE PREVIEW';
+}
 
 function renderText(){
   var host=$('#text-groups');
@@ -309,6 +348,15 @@ $('#about-photo-file').addEventListener('change',function(){
 });
 $('#about-photo-reset').addEventListener('click',function(){
   content.images.about_photo=''; setDirty(true); renderImages(); toast('Reset to the original photo.');
+});
+
+['title','description','socialTitle','socialDescription','socialImage'].forEach(function(key){
+  var id='#meta-'+key.replace(/[A-Z]/g,function(x){return'-'+x.toLowerCase()});
+  $(id).addEventListener('input',function(){content.metadata[key]=this.value.trim();setDirty(true);updateMetadataPreview()});
+});
+$('#meta-social-image-file').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;
+  uploadImage(f,function(path){content.metadata.socialImage=path;$('#meta-social-image').value=path;setDirty(true);updateMetadataPreview();toast('Share image ready — publish changes to make it live.')});
 });
 
 /* ---------- generic list editors ---------- */

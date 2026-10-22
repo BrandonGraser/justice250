@@ -2,7 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Justice &amp; The Next 250 — Site Redesign Prototype</title>
+<title>Justice &amp; The Next 250</title>
+<meta name="description" content="Justice &amp; The Next 250 is a campaign of The Just Trust, bringing together advocates, culture-makers, policymakers, and community leaders to shape the future of justice and safety in America.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Justice &amp; The Next 250">
+<meta property="og:description" content="Building a future we're proud of.">
+<meta property="og:image" content="">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Justice &amp; The Next 250">
+<meta name="twitter:description" content="Building a future we're proud of.">
+<meta name="twitter:image" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google Tag Manager -->
 <script>
@@ -1208,6 +1217,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     grid.innerHTML=html;
   }
   function apply(c){
+    if(c.metadata){
+      var m=c.metadata;
+      if(m.title)document.title=m.title;
+      function meta(selector,value){var el=document.querySelector(selector);if(el&&value!=null)el.setAttribute('content',value)}
+      meta('meta[name="description"]',m.description||'');
+      meta('meta[property="og:title"]',m.socialTitle||m.title||'');
+      meta('meta[property="og:description"]',m.socialDescription||m.description||'');
+      meta('meta[property="og:image"]',m.socialImage||'');
+      meta('meta[name="twitter:title"]',m.socialTitle||m.title||'');
+      meta('meta[name="twitter:description"]',m.socialDescription||m.description||'');
+      meta('meta[name="twitter:image"]',m.socialImage||'');
+    }
     if(c.text) Object.keys(TEXT_MAP).forEach(function(k){
       if(c.text[k]==null) return;
       var els=document.querySelectorAll(TEXT_MAP[k]); els.forEach(function(el){

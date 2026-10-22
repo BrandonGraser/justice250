@@ -1,5 +1,16 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/site.js": {
+      "includeFiles": "index.html"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/api/site"
+    }
+  ],
   "headers": [
     {
       "source": "/content.json",
