@@ -256,8 +256,13 @@ function metadataDefaults(){return{title:'Justice & The Next 250',description:'J
 function loadContent(){
   $('#status').textContent='Loading…';
   return fetch('/api/content?v='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw 0;return r.json()})
+    .then(function(r){
+      if(!r.ok)throw new Error('Could not load CMS storage');
+      if(r.headers.get('X-Content-Source')==='bundled')throw new Error('CMS storage is unavailable. Publishing is disabled to protect your saved content.');
+      return r.json();
+    })
     .catch(function(){
+      if(location.protocol==='http:'||location.protocol==='https:')throw new Error('CMS storage is unavailable. Publishing is disabled to protect your saved content.');
       return fetch('content.json?v='+Date.now(),{cache:'no-store'})
         .then(function(r){if(!r.ok)throw new Error('Could not load site content');return r.json()});
     })
@@ -568,7 +573,7 @@ function boot(){
   if(!password){$('#setup').style.display='block';$('#app').style.display='none';return}
   $('#setup').style.display='none';
   loadContent().then(function(){$('#app').style.display='grid'})
-    .catch(function(e){toast(e.message,true)});
+    .catch(function(e){$('#btn-publish').disabled=true;$('#status').textContent='Storage unavailable';toast(e.message,true)});
 }
 boot();
 </script>

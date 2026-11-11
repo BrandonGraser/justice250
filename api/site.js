@@ -15,6 +15,11 @@ function replaceMeta(html, selector, value) {
   return html.replace(pattern, `$1${escaped}$2`);
 }
 
+function blobContentUrl() {
+  const id = String(process.env.BLOB_STORE_ID || '').replace(/^store_/i, '').toLowerCase();
+  return id ? `https://${id}.public.blob.vercel-storage.com/content.json` : '';
+}
+
 module.exports = async (req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     return res.status(405).send('Method not allowed');
@@ -28,10 +33,9 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { list } = await import('@vercel/blob');
-    const { blobs } = await list({ prefix: 'content.json', limit: 1 });
-    if (blobs.length) {
-      const response = await fetch(`${blobs[0].url}?ts=${Date.now()}`, { cache: 'no-store' });
+    const url = blobContentUrl();
+    if (url) {
+      const response = await fetch(`${url}?ts=${Date.now()}`, { cache: 'no-store' });
       if (response.ok) {
         const content = await response.json();
         const metadata = content && content.metadata;
